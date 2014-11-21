@@ -87,6 +87,6 @@ div.histbar {
 #wetland-cost .histbar {
   background-color: lightblue;
 }
-#urban-cost .histbar {
-  background-color: gray;
+#crop-cost .histbar {
+  background-color: lightyellow;
 }

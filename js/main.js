@@ -67,29 +67,37 @@ var getData = function(feature) {
       current: Math.random()
     },
     cost: {
-      crop: {
-        min: 0,
-        firstQuartile: medians[0]/2,
-        median: medians[0],
-        thirdQuartile: medians[0] + (1 - medians[0]/2),
-        max: 1
-      },
-      wetland: {
-        min: 0,
-        firstQuartile: medians[1]/2,
-        median: medians[1],
-        thirdQuartile: medians[1] + (1 - medians[1]/2),
-        max: 1
-      },
-      forest: {
-        min: 0,
-        firstQuartile: medians[2]/2,
-        median: medians[2],
-        thirdQuartile: medians[2] + (1 - medians[2]/2),
-        max: 1
-      }
+      // For boxplots
+      // crop: {
+      //   min: 0,
+      //   firstQuartile: medians[0]/2,
+      //   median: medians[0],
+      //   thirdQuartile: medians[0] + (1 - medians[0]/2),
+      //   max: 1
+      // }
     }
   };
+
+
+  var coverTypes = ['forest', 'crop', 'wetland', 'rangeland'];
+  for (var c in coverTypes) {
+    var cover = coverTypes[c];
+
+    // Generate array of numbers adding to 1.0
+    var randData = [Math.random(), Math.random(), Math.random(),
+                    Math.random(), Math.random()];
+    var sum = 0;
+    for (var i in randData) {
+      sum += randData[i];
+    }
+    var factor = 1.0 / sum;
+    var scaledRandData = [];
+    for (var j in randData) {
+      scaledRandData.push(randData[j] * factor);
+    }
+
+    d.cost[cover] = scaledRandData;
+  }
 
   return d;
 };
@@ -97,7 +105,8 @@ var getData = function(feature) {
 var config = {
   barwidth: 300,
   margin: {top: 12, right: 12, bottom: 40, left: 70},
-  scatter: {width: 140, height: 140}
+  scatter: {width: 140, height: 140},
+  animationDuration: 1000
 };
 
 var ramp = d3.scale.threshold()
@@ -154,23 +163,36 @@ svg.append("circle").attr("class", "dot");
 
 d3.selectAll(".hist")
   .selectAll(".histbar")
-    .data([0.2, 0.4, 0.6, 0.4, 0.1])  // 9 bins
+    .data([0.1, 0.4, 0.3, 0.15, 0.05])  // 9 bins
   .enter().append("div")
     .attr("class", "histbar")
-    .style("width", function(d){ return Math.round(d*200) + 'px';})
-    .text(function(d) { return d; });
+    .style("width", function(d){ return Math.round(d*300) + 'px';})
+    .text(function(d) { return Math.round(d * 100) + "%"; });
 
 function redraw(data) {
   for (var variable in data) {
     var d = data[variable];
     if (variable === 'cost') {
 
+      for (var cover in d) {
+        var randData = d[cover];
+
+        console.log(test);
+        var test = d3.selectAll("#" + cover + "-cost")
+          .selectAll(".histbar")
+            .data(randData)
+            .transition()
+            .duration(config.animationDuration)
+            .style("width", function(d){ return Math.round(d*300) + 'px';})
+            .text(function(d) { return Math.round(d * 100) + "%"; });
+      }
+
     } else if (variable === 'threats') {
 
       svg.selectAll("circle.dot")
           .data([d])
           .transition()
-          .duration(1000)
+          .duration(config.animationDuration)
           .attr("class", "dot")
           .attr("r", 6.5)
           .attr("cx", function(d) { console.log(d); return x(d.current); })
@@ -181,7 +203,7 @@ function redraw(data) {
       d3.select("." + variable)
           .data([d])
           .transition()
-          .duration(1000)
+          .duration(config.animationDuration)
           .style("background-color", function(d) {return ramp(d); })
           .style("color", function(d) {return textramp(d); })
           .style("width", function(d) { return d * config.barwidth + "px"; })
