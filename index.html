@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+  <link rel="stylesheet" href="css/main.css"></link>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"></link>
+</head>
+<body>
+
+<div class="container-fluid">
+
+  <nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <a class="brand" href="/">National Wildlife Refuge System Return on Investment for Strategic Growth</a>
+    </div>
+  </nav>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div id="results-container">
+        <h3 id="title">Click on Ecoregion for ROI results...</h3>
+        <div id="info"></div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="">
+              <div class="waterfowl chart">
+                <h4> Waterfowl </h4>
+                <div class="waterfowlabundance bar" style="width:0;">Abundance</div>
+                <div class="waterfowlrichness bar" style="width:0;">Richness</div>
+                <div class="waterfowlirreplaceability bar" style="width:0;">Irreplacability</div>
+              </div>
+              <div class="migratory chart">
+                <h4> Migratory </h4>
+                <div class="migratoryabundance bar" style="width:0;">Abundance</div>
+                <div class="migratoryrichness bar" style="width:0;">Richness</div>
+                <div class="migratoryirreplaceability bar" style="width:0;">Irreplacability</div>
+              </div> 
+              <div class="threatened chart">
+                <h4> Threatened and Endangered </h4>
+                <div class="threatenedplants bar" style="width:0;">Plants</div>
+                <div class="threatenedamphibians bar" style="width:0;">Amphibians</div>
+                <div class="threatenedinvertebrates bar" style="width:0;">Aquatic Invertebrates</div>
+              </div>
+            </div>
+            <div class="opportunities chart">
+              <h4> Opportunities </h4>
+              <div class="opprecreation bar" style="width:0;">Recreation</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="threats chart">
+              <h4> Threats </h4>
+              <svg class="threats-scatter"></svg>
+            </div>
+            <div class="costs chart">
+              <h4> Costs </h4>
+              <div class="row">
+                  <div class="col-md-6">
+                    <h5>Forest</h5>
+                    <div id="forest-cost" class="hist"></div>
+                  </div>
+                  <div class="col-md-6">
+                    <h5>Rangeland</h5>
+                    <div id="rangeland-cost" class="hist"></div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                    <h5>Wetland</h5>
+                    <div id="wetland-cost" class="hist"></div>
+                  </div>
+                  <div class="col-md-6">
+                    <h5>Urban</h5>
+                    <div id="urban-cost" class="hist"></div>
+                  </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div id="map"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="js/vendor/ol.js"></script>
+<script src="js/vendor/d3.v3.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
