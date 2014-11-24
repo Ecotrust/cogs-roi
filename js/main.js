@@ -50,6 +50,7 @@ var selectClick = new ol.interaction.Select({
 map.addInteraction(selectClick);
 
 var getData = function(feature) {
+
   var medians = [Math.random(), Math.random(), Math.random()];
   var d = {
     waterfowlabundance: Math.random(),
@@ -163,11 +164,12 @@ svg.append("circle").attr("class", "dot");
 
 d3.selectAll(".hist")
   .selectAll(".histbar")
-    .data([0.1, 0.4, 0.3, 0.15, 0.05])  // 9 bins
+    .data([0,0,0,0,0])
   .enter().append("div")
     .attr("class", "histbar")
     .style("width", function(d){ return Math.round(d*300) + 'px';})
-    .text(function(d) { return Math.round(d * 100) + "%"; });
+    // .text(function(d) { return Math.round(d * 100) + "%"; });
+    .text('');
 
 function redraw(data) {
   for (var variable in data) {
@@ -177,8 +179,7 @@ function redraw(data) {
       for (var cover in d) {
         var randData = d[cover];
 
-        console.log(test);
-        var test = d3.selectAll("#" + cover + "-cost")
+        d3.selectAll("#" + cover + "-cost")
           .selectAll(".histbar")
             .data(randData)
             .transition()

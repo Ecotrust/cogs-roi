@@ -69,9 +69,10 @@ div.histbar {
 }
 
 .axis text {
-  font-size: 10pt;
+/*  font-size: 10pt;
   fill: gray;
   font-family: sans-serif; 
+*/  font: 11px sans-serif;
 }
 
 .dot {
@@ -89,4 +90,20 @@ div.histbar {
 }
 #crop-cost .histbar {
   background-color: lightyellow;
+}
+
+.caveat {
+  padding: 18px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 30px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  position: absolute;
+  right: 16px; 
+  top: 68px;
 }
