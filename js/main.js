@@ -51,6 +51,10 @@ map.addInteraction(selectClick);
 
 var getData = function(feature) {
 
+  // TODO
+  // populate with data from attribute table
+  // var test = feature.get("ATTRNAME");
+
   var medians = [Math.random(), Math.random(), Math.random()];
   var d = {
     waterfowlabundance: Math.random(),
@@ -143,9 +147,9 @@ svg.append("g")
     .call(xAxis)
   .append("text")
     .attr("class", "label")
-    .attr("x", config.scatter.width)
+    .attr("x", config.scatter.width/2)
     .attr("y", 36)
-    .style("text-anchor", "end")
+    .style("text-anchor", "middle")
     .text("Current Threats");
 
 svg.append("g")
@@ -154,9 +158,10 @@ svg.append("g")
   .append("text")
     .attr("class", "label")
     .attr("transform", "rotate(-90)")
+    .attr("x", -1 * config.scatter.height/2)
     .attr("y", -46)
     .attr("dy", ".71em")
-    .style("text-anchor", "end")
+    .style("text-anchor", "middle")
     .text("Future Threats");
 
 svg.append("circle").attr("class", "dot");
