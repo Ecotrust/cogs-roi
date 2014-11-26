@@ -164,6 +164,21 @@ svg.append("g")
     .style("text-anchor", "middle")
     .text("Future Threats");
 
+svg.append("g")
+  .attr("class", "grid")
+  .attr("transform", "translate(0," + config.scatter.height + ")")
+  .call(xAxis
+      .tickSize(-1 * config.scatter.height, 0, 0)
+      .tickFormat("")
+)
+
+svg.append("g")       
+  .attr("class", "grid")
+  .call(yAxis
+      .tickSize(-1 * config.scatter.width, 0, 0)
+      .tickFormat("")
+)
+
 svg.append("circle").attr("class", "dot");
 
 
