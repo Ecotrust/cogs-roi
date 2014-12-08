@@ -150,7 +150,7 @@ svg.append("g")
     .attr("x", config.scatter.width/2)
     .attr("y", 36)
     .style("text-anchor", "middle")
-    .text("Current Threats");
+    .text("Climate Change");
 
 svg.append("g")
     .attr("class", "y axis")
@@ -162,7 +162,7 @@ svg.append("g")
     .attr("y", -46)
     .attr("dy", ".71em")
     .style("text-anchor", "middle")
-    .text("Future Threats");
+    .text("Development");
 
 svg.append("g")
   .attr("class", "grid")
@@ -170,14 +170,14 @@ svg.append("g")
   .call(xAxis
       .tickSize(-1 * config.scatter.height, 0, 0)
       .tickFormat("")
-)
+);
 
-svg.append("g")       
+svg.append("g")
   .attr("class", "grid")
   .call(yAxis
       .tickSize(-1 * config.scatter.width, 0, 0)
       .tickFormat("")
-)
+);
 
 svg.append("circle").attr("class", "dot");
 
