@@ -1,3 +1,6 @@
+/* global d3 */
+/* jshint bitwise: false */
+
 var raster = new ol.layer.Tile({
   source: new ol.source.MapQuest({layer: 'sat'})
 });
@@ -71,38 +74,34 @@ var getData = function(feature) {
       future: Math.random(),
       current: Math.random()
     },
-    cost: {
-      // For boxplots
-      // crop: {
-      //   min: 0,
-      //   firstQuartile: medians[0]/2,
-      //   median: medians[0],
-      //   thirdQuartile: medians[0] + (1 - medians[0]/2),
-      //   max: 1
-      // }
-    }
+    costs: [
+      // Boxplots
+      {
+        type: 'rangeland',
+        min: medians[0]/3,
+        firstQuartile: medians[0]/2,
+        median: medians[0],
+        thirdQuartile: medians[0] * 1.3,
+        max: medians[0] * 2
+      },
+      {
+        type: 'agriculture',
+        min: medians[1]/3,
+        firstQuartile: medians[1]/2,
+        median: medians[1],
+        thirdQuartile: medians[1] * 1.3,
+        max: medians[1] * 2
+      },
+      {
+        type: 'forest',
+        min: medians[2]/3,
+        firstQuartile: medians[2]/2,
+        median: medians[2],
+        thirdQuartile: medians[2] * 1.3,
+        max: medians[2] * 2
+      },
+    ]
   };
-
-
-  var coverTypes = ['forest', 'crop', 'wetland', 'rangeland'];
-  for (var c in coverTypes) {
-    var cover = coverTypes[c];
-
-    // Generate array of numbers adding to 1.0
-    var randData = [Math.random(), Math.random(), Math.random(),
-                    Math.random(), Math.random()];
-    var sum = 0;
-    for (var i in randData) {
-      sum += randData[i];
-    }
-    var factor = 1.0 / sum;
-    var scaledRandData = [];
-    for (var j in randData) {
-      scaledRandData.push(randData[j] * factor);
-    }
-
-    d.cost[cover] = scaledRandData;
-  }
 
   return d;
 };
@@ -182,31 +181,45 @@ svg.append("g")
 svg.append("circle").attr("class", "dot");
 
 
-d3.selectAll(".hist")
-  .selectAll(".histbar")
-    .data([0,0,0,0,0])
-  .enter().append("div")
-    .attr("class", "histbar")
-    .style("width", function(d){ return Math.round(d*300) + 'px';})
-    // .text(function(d) { return Math.round(d * 100) + "%"; });
-    .text('');
+d3.select("#cost-container")
+  .selectAll(".boxplot")
+  .data(getData()['costs'])
+.enter().append("div")
+  .attr("class", "boxplot")
+  .style("width", 0)
+  .text(function(d) { return d.type; });
+
+// d3.select("#cost-container")
+//   .selectAll(".boxplot")
+//     .data(getData)  
+//   .selectAll(".histbar")
+//     .data([0,0,0,0,0])
+//   .enter().append("div")
+//     .attr("class", "histbar")
+//     .style("width", function(d){ return Math.round(d*300) + 'px';})
+//     // .text(function(d) { return Math.round(d * 100) + "%"; });
+//     .text('');
+
+function testBoxplot(test) {
+  console.log("test", test);
+}
 
 function redraw(data) {
   for (var variable in data) {
     var d = data[variable];
-    if (variable === 'cost') {
-
-      for (var cover in d) {
-        var randData = d[cover];
-
-        d3.selectAll("#" + cover + "-cost")
-          .selectAll(".histbar")
-            .data(randData)
-            .transition()
-            .duration(config.animationDuration)
-            .style("width", function(d){ return Math.round(d*300) + 'px';})
-            .text(function(d) { return Math.round(d * 100) + "%"; });
-      }
+    if (variable === 'costs') {
+      
+      console.log(d);
+      d3.select("#cost-container")
+        .selectAll(".boxplot")
+        .data(d)
+        .text(function(d) {return d.type;})
+        .transition()
+        .duration(config.animationDuration)
+        .style("margin-left", function(d){ return d.min * 300 + 'px';})
+        .style("width", function(d){
+          return Math.round((d.max-d.min) * 100) + 20 + 'px';
+        });
 
     } else if (variable === 'threats') {
 
@@ -216,7 +229,7 @@ function redraw(data) {
           .duration(config.animationDuration)
           .attr("class", "dot")
           .attr("r", 6.5)
-          .attr("cx", function(d) { console.log(d); return x(d.current); })
+          .attr("cx", function(d) { return x(d.current); })
           .attr("cy", function(d) { return y(d.future); })
           .style("fill", function(d) { return "#2c3e50"; });
 
