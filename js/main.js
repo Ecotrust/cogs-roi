@@ -189,27 +189,12 @@ d3.select("#cost-container")
   .style("width", 0)
   .text(function(d) { return d.type; });
 
-// d3.select("#cost-container")
-//   .selectAll(".boxplot")
-//     .data(getData)  
-//   .selectAll(".histbar")
-//     .data([0,0,0,0,0])
-//   .enter().append("div")
-//     .attr("class", "histbar")
-//     .style("width", function(d){ return Math.round(d*300) + 'px';})
-//     // .text(function(d) { return Math.round(d * 100) + "%"; });
-//     .text('');
-
-function testBoxplot(test) {
-  console.log("test", test);
-}
 
 function redraw(data) {
   for (var variable in data) {
     var d = data[variable];
     if (variable === 'costs') {
       
-      console.log(d);
       d3.select("#cost-container")
         .selectAll(".boxplot")
         .data(d)
