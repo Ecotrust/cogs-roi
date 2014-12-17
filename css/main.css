@@ -55,7 +55,6 @@ div.boxplot {
   text-align: right;
   padding: 3px;
   margin: 0;
-  height: 16px;
   margin-bottom: 5px;
   border: 1px solid gray;
   -webkit-border-radius: 3px;
@@ -109,7 +108,6 @@ div.boxplot {
   position: absolute;
   right: 16px; 
   top: 68px;
-  display: none;
 }
 
 .grid .tick {
@@ -119,10 +117,4 @@ div.boxplot {
 .grid path {
   stroke-width: 0;
   stroke-dasharray: 10,10;
-}
-
-#cost-container {
-  background-color: white;
-  height: 16px;
-  width: 300px;
 }

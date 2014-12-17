@@ -52,70 +52,54 @@ var selectClick = new ol.interaction.Select({
 });
 map.addInteraction(selectClick);
 
-function getFeatureAttr(feature, attr) {
-  if (feature === undefined) {
-    return 0;
-  } else {
-    var val = feature.get(attr);
-    if (val === undefined) {
-      console.log("WARNING", attr, val);
-      val = 0;
-    }
-    return val;
-    //console.log(attr, val);
-  }
-}
-
 var getData = function(feature) {
 
-  var medians = [getFeatureAttr(feature, "AvgCost_In")];
+  // TODO
+  // populate with data from attribute table
+  // var test = feature.get("ATTRNAME");
 
-  // var medians = [1.0];
+  var medians = [Math.random(), Math.random(), Math.random()];
   var d = {
-    landbirdabundance:    getFeatureAttr(feature, "LandBirdAb"),
-    landbirdhabitat:      getFeatureAttr(feature, "LandBirdHa"),
-    shorebirdabundance:   getFeatureAttr(feature, "ShoreBirdA"),
-    shorebirdhabitat:     getFeatureAttr(feature, "ShorebirdH"),
-    waterbirdabundance:   getFeatureAttr(feature, "WaterbirdA"),
-    waterbirdhabitat:     getFeatureAttr(feature, "WaterbirdH"),
-    waterfowlabundance:   getFeatureAttr(feature, "WaterfowlA"),
-    waterfowlhabitat:     getFeatureAttr(feature, "WaterfowlH"),
-    threatenedfish:       getFeatureAttr(feature, "TEFishes_I"),
-    threatenedmammals:    getFeatureAttr(feature, "TEMammals_"),
-    threatenedreptiles:   getFeatureAttr(feature, "TEReptiles"),
-    threatenedbirds:      getFeatureAttr(feature, "TEBirds_In"),
-    threatenedplants:     getFeatureAttr(feature, "TEPlants_I"),
-    threatenedamphibians: getFeatureAttr(feature, "TEAmphib_I"),
+    waterfowlabundance: Math.random(),
+    waterfowlrichness: Math.random(),
+    waterfowlirreplaceability: Math.random(),
+    migratoryabundance: Math.random(),
+    migratoryrichness: Math.random(),
+    migratoryirreplaceability: Math.random(),
+    threatenedplants: Math.random(),
+    threatenedamphibians: Math.random(),
+    threatenedinvertebrates: Math.random(),
+    opprecreation: Math.random(),
     threats: {
-      climate:            getFeatureAttr(feature, "ClimateCha"),
-      development:        getFeatureAttr(feature, "Developmen"),
+      future: Math.random(),
+      current: Math.random()
     },
     costs: [
       // Boxplots
       {
-        type: '',
-        min: medians[0] - 0.2,
+        type: 'rangeland',
+        min: medians[0]/3,
         firstQuartile: medians[0]/2,
         median: medians[0],
         thirdQuartile: medians[0] * 1.3,
-        max: medians[0] + 0.2
-      }
-      // {
-      //   type: 'agriculture',
-      //   min: medians[1]/3,
-      //   firstQuartile: medians[1]/2,
-      //   median: medians[1],
-      //   thirdQuartile: medians[1] * 1.3,
-      //   max: medians[1] * 2
-      // },
-      // {
-      //   type: 'forest',
-      //   min: medians[2]/3,
-      //   firstQuartile: medians[2]/2,
-      //   median: medians[2],
-      //   thirdQuartile: medians[2] * 1.3,
-      //   max: medians[2] * 2
-      // },
+        max: medians[0] * 2
+      },
+      {
+        type: 'agriculture',
+        min: medians[1]/3,
+        firstQuartile: medians[1]/2,
+        median: medians[1],
+        thirdQuartile: medians[1] * 1.3,
+        max: medians[1] * 2
+      },
+      {
+        type: 'forest',
+        min: medians[2]/3,
+        firstQuartile: medians[2]/2,
+        median: medians[2],
+        thirdQuartile: medians[2] * 1.3,
+        max: medians[2] * 2
+      },
     ]
   };
 
@@ -217,7 +201,7 @@ function redraw(data) {
         .text(function(d) {return d.type;})
         .transition()
         .duration(config.animationDuration)
-        .style("margin-left", function(d){ return (60 + (d.min * 240)) + 'px';})
+        .style("margin-left", function(d){ return d.min * 300 + 'px';})
         .style("width", function(d){
           return Math.round((d.max-d.min) * 100) + 20 + 'px';
         });
@@ -230,8 +214,8 @@ function redraw(data) {
           .duration(config.animationDuration)
           .attr("class", "dot")
           .attr("r", 6.5)
-          .attr("cx", function(d) { return x(d.climate); })
-          .attr("cy", function(d) { return y(d.development); })
+          .attr("cx", function(d) { return x(d.current); })
+          .attr("cy", function(d) { return y(d.future); })
           .style("fill", function(d) { return "#2c3e50"; });
 
     } else {
