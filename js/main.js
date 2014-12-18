@@ -114,12 +114,36 @@ var getData = function(feature) {
     costs: [
       // Boxplots
       {
-        type: '',
+        type: 'forest',
         min: medians[0] - 0.2,
         firstQuartile: medians[0]/2,
         median: medians[0],
         thirdQuartile: medians[0] * 1.3,
         max: medians[0] + 0.2
+      },
+      {
+        type: 'agriculture',
+        min: medians[0] - 0.15,
+        firstQuartile: medians[0]/2,
+        median: medians[0],
+        thirdQuartile: medians[0] * 1.3,
+        max: medians[0] + 0.35
+      },
+      {
+        type: 'wetland',
+        min: medians[0] - 0.25,
+        firstQuartile: medians[0]/2,
+        median: medians[0],
+        thirdQuartile: medians[0] * 1.3,
+        max: medians[0] + 0.35
+      },
+      {
+        type: 'pasture',
+        min: medians[0] - 0.1,
+        firstQuartile: medians[0]/2,
+        median: medians[0],
+        thirdQuartile: medians[0] * 1.3,
+        max: medians[0] + 0.3
       }
     ]
   };
