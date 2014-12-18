@@ -171,3 +171,9 @@ circle.dot {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.quadrant {
+  font-size:9pt;
+  stroke:none;
+  fill: #aaa;
+}
