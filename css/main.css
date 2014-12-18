@@ -176,4 +176,5 @@ circle.dot {
   font-size:9pt;
   stroke:none;
   fill: #aaa;
+  text-anchor: middle;
 }

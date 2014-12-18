@@ -249,25 +249,25 @@ quads = svgRoi.append("g");
 quads.append("text")
   .attr("class", "quadrant")
   .text("Under-valued") // upper left
-  .attr("transform", "translate(62,40)")
+  .attr("transform", "translate(110,40)")
   .call(yAxis);
 
 quads.append("text")
   .attr("class", "quadrant")
   .text("Not a Priority") // lower left
-  .attr("transform", "translate(62,120)")
+  .attr("transform", "translate(110,120)")
   .call(yAxis);
 
 quads.append("text")
   .attr("class", "quadrant")
   .text("Solid Investments") // upper right
-  .attr("transform", "translate(162,40)")
+  .attr("transform", "translate(208,40)")
   .call(yAxis);
 
 quads.append("text")
   .attr("class", "quadrant")
   .text("Over-valued") // lower right
-  .attr("transform", "translate(162,120)")
+  .attr("transform", "translate(205,120)")
   .call(yAxis);
 
 svgThreats.select("g.x text.label").text("Climate Change");
