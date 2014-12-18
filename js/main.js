@@ -15,22 +15,42 @@ var styleArray = [new ol.style.Style({
   })
 })];
 
-var selectedStyle = [new ol.style.Style({
-  fill: new ol.style.Fill({
-    color: 'rgba(255, 255, 255, 0.1)'
-  }),
-  stroke: new ol.style.Stroke({
-    color: 'yellow',
-    width: 2
-  })
-})];
+var styleCache = {};
+
+function selectedStyle(feature, resolution) {
+  var text = feature.get('US_L3NAME');
+
+  if (!styleCache[text]) {
+    styleCache[text] = [new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: 'rgba(255, 255, 255, 0.1)'
+      }),
+      stroke: new ol.style.Stroke({
+        color: 'yellow',
+        width: 2
+      })
+      // Problem: multipart labels with no collision detection
+      // text: new ol.style.Text({
+      //   font: '14px Calibri,sans-serif',
+      //   text: text,
+      //   fill: new ol.style.Fill({
+      //     color: '#000'
+      //   }),
+      //   stroke: new ol.style.Stroke({
+      //     color: 'rgba(255, 255, 255, 0.7)',
+      //     width: 3
+      //   })
+      // })
+    })];
+  }
+  return styleCache[text];
+};
 
 var vector = new ol.layer.Vector({
   source: new ol.source.TopoJSON({
     url: 'data/ecoregions.topojson' // in default 3857 projection
   }),
   style: function(feature, resolution) {
-    //console.log(feature.values_.WF_mallard);
     return styleArray;
   }
 });
@@ -205,6 +225,29 @@ d3.select("#cost-container")
   .style("width", 0)
   .text(function(d) { return d.type; });
 
+function barwidth(d) { 
+  return d * config.barwidth + "px";
+}
+
+function threatsX(d) {
+  return x(d.climate);
+}
+
+function threatsY(d) {
+  return y(d.development);
+}
+
+function costWidth(d){
+  return Math.round((d.max-d.min) * 100) + 20 + 'px';
+}
+
+function costOffset(d) {
+  return (60 + (d.min * 240)) + 'px';
+}
+
+function costText(d) {
+  return d.type;
+}
 
 function redraw(data) {
   for (var variable in data) {
@@ -214,13 +257,11 @@ function redraw(data) {
       d3.select("#cost-container")
         .selectAll(".boxplot")
         .data(d)
-        .text(function(d) {return d.type;})
+        .text(costText)
         .transition()
         .duration(config.animationDuration)
-        .style("margin-left", function(d){ return (60 + (d.min * 240)) + 'px';})
-        .style("width", function(d){
-          return Math.round((d.max-d.min) * 100) + 20 + 'px';
-        });
+        .style("margin-left", costOffset)
+        .style("width", costWidth);
 
     } else if (variable === 'threats') {
 
@@ -230,18 +271,21 @@ function redraw(data) {
           .duration(config.animationDuration)
           .attr("class", "dot")
           .attr("r", 6.5)
-          .attr("cx", function(d) { return x(d.climate); })
-          .attr("cy", function(d) { return y(d.development); })
-          .style("fill", function(d) { return "#2c3e50"; });
+          .attr("cx", threatsX)
+          .attr("cy", threatsY);
 
     } else {
+      
       d3.select("." + variable)
           .data([d])
           .transition()
           .duration(config.animationDuration)
-          .style("background-color", function(d) {return ramp(d); })
-          .style("color", function(d) {return textramp(d); })
-          .style("width", function(d) { return d * config.barwidth + "px"; })
+          // .style("background-color", function(d) {return ramp(d); })
+          // .style("color", function(d) {return textramp(d); })
+          .style("background-color", ramp)
+          .style("color", textramp)
+          .style("width", barwidth);
+
     }
   }
 }
@@ -252,7 +296,7 @@ var displayFeatureInfo = function(pixel) {
     return feature;
   });
   var info = document.getElementById('info');
-  var title = document.getElementById('title');
+  var title = document.getElementById('selected-ecoregion');
 
   if (feature) {
     title.innerHTML = feature.get('US_L3NAME');
