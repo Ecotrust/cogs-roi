@@ -1,6 +1,7 @@
 .chart {
   padding: 10px;
-  margin-bottom: 20px;
+  padding-top: 1px;
+  margin-bottom: 16px;
   font-size: 18px;
   font-weight: 200;
   line-height: 30px;
@@ -25,6 +26,11 @@ body {
   font-weight: 200;
   color: #fff;
   text-shadow: 0 1px 0 #2c3e50;
+}
+
+h4 {
+  margin-top: 24px;
+  font-weight: 600;
 }
 
 #map {
@@ -116,10 +122,10 @@ div.boxplot {
   padding: 18px;
   margin-bottom: 20px;
   font-size: 16px;
-  font-weight: 200;
+  font-weight: 700;
   line-height: 30px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+  color: rgb(42, 44, 76);
+  background-color: rgba(255, 255, 255, 0.75);
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -127,6 +133,7 @@ div.boxplot {
   left: 51%; 
   top: 68px;
   font-size: 175%;
+
 }
 
 .grid .tick {

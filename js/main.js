@@ -30,6 +30,7 @@ function selectedStyle(feature, resolution) {
         width: 2
       })
       // Problem: multipart labels with no collision detection
+      // https://groups.google.com/forum/#!searchin/ol3-dev/label/ol3-dev/Yp7EOiwiycE/YdpNU6-eDToJ
       // text: new ol.style.Text({
       //   font: '14px Calibri,sans-serif',
       //   text: text,
@@ -44,7 +45,7 @@ function selectedStyle(feature, resolution) {
     })];
   }
   return styleCache[text];
-};
+}
 
 var vector = new ol.layer.Vector({
   source: new ol.source.TopoJSON({
@@ -52,7 +53,8 @@ var vector = new ol.layer.Vector({
   }),
   style: function(feature, resolution) {
     return styleArray;
-  }
+  },
+  change: function(state) { console.log(state); }
 });
 
 var map = new ol.Map({
@@ -90,7 +92,6 @@ var getData = function(feature) {
 
   var medians = [getFeatureAttr(feature, "AvgCost_In")];
 
-  // var medians = [1.0];
   var d = {
     landbirdabundance:    getFeatureAttr(feature, "LandBirdAb"),
     landbirdhabitat:      getFeatureAttr(feature, "LandBirdHa"),
@@ -120,22 +121,6 @@ var getData = function(feature) {
         thirdQuartile: medians[0] * 1.3,
         max: medians[0] + 0.2
       }
-      // {
-      //   type: 'agriculture',
-      //   min: medians[1]/3,
-      //   firstQuartile: medians[1]/2,
-      //   median: medians[1],
-      //   thirdQuartile: medians[1] * 1.3,
-      //   max: medians[1] * 2
-      // },
-      // {
-      //   type: 'forest',
-      //   min: medians[2]/3,
-      //   firstQuartile: medians[2]/2,
-      //   median: medians[2],
-      //   thirdQuartile: medians[2] * 1.3,
-      //   max: medians[2] * 2
-      // },
     ]
   };
 
@@ -225,7 +210,7 @@ d3.select("#cost-container")
   .style("width", 0)
   .text(function(d) { return d.type; });
 
-function barwidth(d) { 
+function barwidth(d) {
   return d * config.barwidth + "px";
 }
 
@@ -280,8 +265,6 @@ function redraw(data) {
           .data([d])
           .transition()
           .duration(config.animationDuration)
-          // .style("background-color", function(d) {return ramp(d); })
-          // .style("color", function(d) {return textramp(d); })
           .style("background-color", ramp)
           .style("color", textramp)
           .style("width", barwidth);
@@ -289,7 +272,6 @@ function redraw(data) {
     }
   }
 }
-
 
 var displayFeatureInfo = function(pixel) {
   var feature = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
@@ -312,9 +294,16 @@ map.on('click', function(evt) {
 });
 
 var resizeMap = function(){
-  $('#map').height($(window).height() - 64);
+  $('#map').height($(window).height() - 68);
   $('#map').width($(window).width()/2 - 24);
   map.updateSize();
 };
 window.onload = resizeMap;
 window.onresize = resizeMap;
+
+
+
+vector.on('change', function(a){
+  var title = document.getElementById('selected-ecoregion');
+  title.innerHTML = "Select an Ecoregion to begin";
+});
