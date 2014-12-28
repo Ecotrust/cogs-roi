@@ -9,11 +9,29 @@
 <body>
 
 <div class="container-fluid">
+
+
+
+
   <nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="navbar-inner">
     <div class="container-fluid">
-      <a class="brand" href="/">National Wildlife Refuge System Return on Investment for Strategic Growth</a>
+      <a class="brand" href = "./">
+        National Wildlife Refuge System Return on Investment for Strategic Growth
+      </a>
+      <div class="navlinks pull-right">
+        <a href="./docs.html">Learn More</a>
+        <span class="sep"></span>
+        <a href="http://cogs-dev.priorities.ecotrust.org/">COGS Priorities Tool</a>
+      </div>
+    </div>
     </div>
   </nav>
+
+
+
+
+
   <div class="row">
     <div class="col-md-6">
       <div id="results-container">
@@ -21,27 +39,20 @@
           <div class="col-md-6">
             <div class="">
               <div class="landbird chart">
+                <h3> Population Objectives </h3>
                 <h4> Landbird </h4>
                 <div class="landbirdabundance bar" style="width:0;">Abundance</div>
                 <div class="landbirdhabitat bar" style="width:0;">Habitat</div>
-<!--               </div>
-              <div class="waterbird chart">
- -->                <h4> Waterbird </h4>
+                <h4> Waterbird </h4>
                 <div class="waterbirdabundance bar" style="width:0;">Abundance</div>
                 <div class="waterbirdhabitat bar" style="width:0;">Habitat</div>
-<!--               </div>
-              <div class="waterfowl chart">
- -->                <h4> Waterfowl </h4>
+                <h4> Waterfowl </h4>
                 <div class="waterfowlabundance bar" style="width:0;">Abundance</div>
                 <div class="waterfowlhabitat bar" style="width:0;">Habitat</div>
-<!--               </div>
-              <div class="shorebird chart">
- -->                <h4> Shorebird </h4>
+                <h4> Shorebird </h4>
                 <div class="shorebirdabundance bar" style="width:0;">Abundance</div>
                 <div class="shorebirdhabitat bar" style="width:0;">Habitat</div>
-<!--               </div>
-              <div class="threatened chart">
- -->                <h4> Threatened and Endangered </h4>
+                <h4> Threatened and Endangered </h4>
                 <div class="threatenedfish bar" style="width:0;">Fish</div>
                 <div class="threatenedmammals bar" style="width:0;">Mammals</div>
                 <div class="threatenedreptiles bar" style="width:0;">Reptiles</div>
@@ -54,12 +65,19 @@
           </div>
           <div class="col-md-6">
             <div class="threats chart">
-              <h4> Threats </h4>
-              <svg class="threats-scatter"></svg>
+              <h3> Return on Investment </h3>
+               <svg class="roi-scatter scatter"></svg>
             </div>
-            <div class="costs chart">
+            <div class="threats chart">
+              <h3> Limiting Factors </h3>
+              <svg class="threats-scatter scatter"></svg>
               <h4> Average Land Cost ($ per acre) </h4>
-              <div id="cost-container"></div>
+              <em class="text-danger small">
+                Temporary dummy data meant solely to illustrate functionality.
+              </em>
+              <div id="cost-container">
+
+              </div>
             </div>
           </div>
         </div>

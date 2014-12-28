@@ -107,6 +107,10 @@ var getData = function(feature) {
     threatenedbirds:      getFeatureAttr(feature, "TEBirds_In"),
     threatenedplants:     getFeatureAttr(feature, "TEPlants_I"),
     threatenedamphibians: getFeatureAttr(feature, "TEAmphib_I"),
+    roi: {
+      roi:                getFeatureAttr(feature, "ROI"),
+      currentInvestment:  getFeatureAttr(feature, "CurExpendi"),
+    },
     threats: {
       climate:            getFeatureAttr(feature, "ClimateCha"),
       development:        getFeatureAttr(feature, "Developmen"),
@@ -114,12 +118,44 @@ var getData = function(feature) {
     costs: [
       // Boxplots
       {
-        type: '',
+        type: 'Forest',
         min: medians[0] - 0.2,
         firstQuartile: medians[0]/2,
         median: medians[0],
         thirdQuartile: medians[0] * 1.3,
         max: medians[0] + 0.2
+      },
+      {
+        type: 'Agriculture',
+        min: medians[0] - 0.15,
+        firstQuartile: medians[0]/2,
+        median: medians[0],
+        thirdQuartile: medians[0] * 1.3,
+        max: medians[0] + 0.35
+      },
+      {
+        type: 'Wetland',
+        min: medians[0] - 0.25,
+        firstQuartile: medians[0]/2,
+        median: medians[0],
+        thirdQuartile: medians[0] * 1.3,
+        max: medians[0] + 0.35
+      },
+      {
+        type: 'Pasture',
+        min: medians[0] - 0.1,
+        firstQuartile: medians[0]/2,
+        median: medians[0],
+        thirdQuartile: medians[0] * 1.3,
+        max: medians[0] + 0.3
+      },
+      {
+        type: 'Overall',
+        min: medians[0] -0.1,
+        firstQuartile: medians[0]/2,
+        median: medians[0],
+        thirdQuartile: medians[0] * 1.3,
+        max: medians[0] + 0.1
       }
     ]
   };
@@ -129,8 +165,8 @@ var getData = function(feature) {
   
 var config = {
   barwidth: 300,
-  margin: {top: 12, right: 12, bottom: 40, left: 70},
-  scatter: {width: 140, height: 140},
+  margin: {top: 12, right: 12, bottom: 40, left: 58},
+  scatter: {width: 200, height: 150},
   animationDuration: 1000
 };
 
@@ -148,7 +184,7 @@ var y = d3.scale.linear().range([config.scatter.height, 0]);
 var xAxis = d3.svg.axis().ticks(3).scale(x).orient("bottom");
 var yAxis = d3.svg.axis().ticks(3).scale(y).orient("left");
 
-var svg = d3.select("svg.threats-scatter")
+var svg = d3.selectAll("svg.scatter")
     .attr("width", config.scatter.width + config.margin.left + config.margin.right)
     .attr("height", config.scatter.height + config.margin.top + config.margin.bottom)
   .append("g")
@@ -169,8 +205,8 @@ svg.append("g")
     .attr("class", "label")
     .attr("x", config.scatter.width/2)
     .attr("y", 36)
-    .style("text-anchor", "middle")
-    .text("Climate Change");
+    .style("text-anchor", "middle");
+    // .text("Climate Change");
 
 svg.append("g")
     .attr("class", "y axis")
@@ -181,8 +217,8 @@ svg.append("g")
     .attr("x", -1 * config.scatter.height/2)
     .attr("y", -46)
     .attr("dy", ".71em")
-    .style("text-anchor", "middle")
-    .text("Development");
+    .style("text-anchor", "middle");
+    // .text("Development");
 
 svg.append("g")
   .attr("class", "grid")
@@ -201,6 +237,42 @@ svg.append("g")
 
 svg.append("circle").attr("class", "dot");
 
+var svgRoi = d3.select("svg.roi-scatter");
+var svgThreats = d3.select("svg.threats-scatter");
+
+svgRoi.select("g.x text.label").text("Current Investment");
+svgRoi.select("g.y text.label").text("Return on Investment");
+// svgRoi.select("circle").attr("class", "roi-dot");
+
+quads = svgRoi.append("g");
+
+quads.append("text")
+  .attr("class", "quadrant")
+  .text("Under-valued") // upper left
+  .attr("transform", "translate(110,40)")
+  .call(yAxis);
+
+quads.append("text")
+  .attr("class", "quadrant")
+  .text("Not a Priority") // lower left
+  .attr("transform", "translate(110,120)")
+  .call(yAxis);
+
+quads.append("text")
+  .attr("class", "quadrant")
+  .text("Solid Investments") // upper right
+  .attr("transform", "translate(208,40)")
+  .call(yAxis);
+
+quads.append("text")
+  .attr("class", "quadrant")
+  .text("Over-valued") // lower right
+  .attr("transform", "translate(205,120)")
+  .call(yAxis);
+
+svgThreats.select("g.x text.label").text("Climate Change");
+svgThreats.select("g.y text.label").text("Development");
+// svgThreats.select("circle").attr("class", "roi-dot");
 
 d3.select("#cost-container")
   .selectAll(".boxplot")
@@ -220,6 +292,17 @@ function threatsX(d) {
 
 function threatsY(d) {
   return y(d.development);
+}
+
+function roiX(d) {
+  return x(d.currentInvestment);
+}
+
+function roiY(d) {
+  var raw = d.roi;
+  // TODO scale in GIS analysis step 
+  var scaled = ((raw + 7) / 41.7);
+  return y(scaled);
 }
 
 function costWidth(d){
@@ -248,9 +331,20 @@ function redraw(data) {
         .style("margin-left", costOffset)
         .style("width", costWidth);
 
+    } else if (variable === 'roi') {
+
+      svgRoi.selectAll("circle.dot")
+          .data([d])
+          .transition()
+          .duration(config.animationDuration)
+          .attr("class", "dot")
+          .attr("r", 6.5)
+          .attr("cx", roiX)
+          .attr("cy", roiY);
+
     } else if (variable === 'threats') {
 
-      svg.selectAll("circle.dot")
+      svgThreats.selectAll("circle.dot")
           .data([d])
           .transition()
           .duration(config.animationDuration)
