@@ -110,34 +110,40 @@ div.boxplot {
   padding: 8px;
   padding-left: 7px;
   padding-right: 7px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.65);
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
   position: absolute;
-  right: 4px; 
-  top: -38px;
+  right: 0; 
+  top: -42px;
   z-index: 9999;
 }
 
 .layer-switcher .panel {
   background-color: rgba(255, 255, 255, 0.85);
   position: absolute;
-  top: -38px;
-  right: 4px; 
+  top: -42px;
+  right: 0; 
   min-width: 280px;
   z-index: 9998;
+  font: 12px sans-serif;
+  font-weight: normal;
 }
 
 #selected-ecoregion {
-  padding: 18px;
-  padding-left: 22px;
-  margin-bottom: 20px;
-  font-size: 16px;
+  padding: 14px;
+  padding-left: 18px;
+  margin-bottom: 16px;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 30px;
+  line-height: 26px;
+/*
   color: rgb(142, 144, 176);
   background-color: rgba(0, 0, 0, 0.75);
+*/  
+  color: rgb(32, 34, 66);
+  background-color: rgba(255, 255, 255, 0.65);
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
