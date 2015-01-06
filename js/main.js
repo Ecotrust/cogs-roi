@@ -3,9 +3,6 @@
 
 $(document).ready(function() {
 
-  // $("#layerlist").hide();
-
-
   var styleArray = [new ol.style.Style({
     fill: new ol.style.Fill({
       color: 'rgba(255, 255, 255, 0.0)'
@@ -116,7 +113,7 @@ $(document).ready(function() {
               params: {'LAYERS': '0'}
             })
           }),
-          
+
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
             title: "Climate Change Scenario",
@@ -281,7 +278,6 @@ $(document).ready(function() {
       .attr("x", config.scatter.width/2)
       .attr("y", 36)
       .style("text-anchor", "middle");
-      // .text("Climate Change");
 
   svg.append("g")
       .attr("class", "y axis")
@@ -293,7 +289,6 @@ $(document).ready(function() {
       .attr("y", -46)
       .attr("dy", ".71em")
       .style("text-anchor", "middle");
-      // .text("Development");
 
   svg.append("g")
     .attr("class", "grid")
@@ -317,7 +312,6 @@ $(document).ready(function() {
 
   svgRoi.select("g.x text.label").text("Current Investment");
   svgRoi.select("g.y text.label").text("Return on Investment");
-  // svgRoi.select("circle").attr("class", "roi-dot");
 
   quads = svgRoi.append("g");
 
@@ -347,7 +341,6 @@ $(document).ready(function() {
 
   svgThreats.select("g.x text.label").text("Climate Change");
   svgThreats.select("g.y text.label").text("Development");
-  // svgThreats.select("circle").attr("class", "roi-dot");
 
   d3.select("#cost-container")
     .selectAll(".boxplot")
@@ -469,12 +462,6 @@ $(document).ready(function() {
   };
   window.onload = resizeMap;
   window.onresize = resizeMap;
-
-  // $(".layericon").click(
-  //   function() {
-  //     $("#layerlist").toggle();
-  //   }
-  // );
 
   vector.on('change', function(a){
     var title = document.getElementById('selected-ecoregion');
