@@ -80,7 +80,6 @@ $(document).ready(function() {
       new ol.layer.Group({
         title: "Overlays",
         layers: [
-          vector,
 
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
@@ -123,6 +122,8 @@ $(document).ready(function() {
               params: {'LAYERS': '0'}
             })
           }),
+
+          vector
         ]
       })
     ],
