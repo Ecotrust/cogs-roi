@@ -82,7 +82,51 @@ $(document).ready(function() {
       }),
       new ol.layer.Group({
         title: "Overlays",
-        layers: [vector]
+        layers: [
+          vector,
+
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "US States",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'http://demo.opengeo.org/geoserver/wms',
+              params: {'LAYERS': 'topp:states'},
+              serverType: 'geoserver'
+            })
+          }),
+          // For tiled, see http://openlayers.org/en/v3.0.0/examples/wms-tiled.js 
+
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "Projects",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54933e61e4b06a960f00e72e/MapServer/WmsServer',
+              params: {'LAYERS': '0'}
+            })
+          }),
+
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "Land Value Scenario",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54934d9ce4b0bb067209b73a/MapServer/WMSServer',
+              params: {'LAYERS': '0'}
+            })
+          }),
+          
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "Climate Change Scenario",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54934eebe4b0bb067209b73e/MapServer/WMSServer',
+              params: {'LAYERS': '0'}
+            })
+          }),
+        ]
       })
     ],
     target: 'map',
