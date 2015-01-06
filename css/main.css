@@ -102,39 +102,56 @@ div.boxplot {
   background-color: lightyellow;
 }
 
-.caveat {
-  padding: 18px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  font-weight: 200;
-  line-height: 30px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+.panel {
+  background: 0;  
+}
+
+.layer-switcher button {
+  padding: 8px;
+  padding-left: 7px;
+  padding-right: 7px;
+  background-color: rgba(255, 255, 255, 0.65);
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
   position: absolute;
-  right: 16px; 
-  top: 68px;
-  display: none;
+  right: 0; 
+  top: -42px;
+  z-index: 9999;
+}
+
+.layer-switcher .panel {
+  background-color: rgba(255, 255, 255, 0.85);
+  position: absolute;
+  top: -42px;
+  right: 0; 
+  min-width: 280px;
+  z-index: 9998;
+  font: 12px sans-serif;
+  font-weight: normal;
 }
 
 #selected-ecoregion {
-  padding: 18px;
-  margin-bottom: 20px;
-  font-size: 16px;
+  padding: 14px;
+  padding-left: 18px;
+  margin-bottom: 16px;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 30px;
-  color: rgb(42, 44, 76);
-  background-color: rgba(255, 255, 255, 0.75);
+  line-height: 26px;
+/*
+  color: rgb(142, 144, 176);
+  background-color: rgba(0, 0, 0, 0.75);
+*/  
+  color: rgb(32, 34, 66);
+  background-color: rgba(255, 255, 255, 0.65);
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
   position: absolute;
-  left: 51%; 
-  top: 68px;
+  left: 22px; 
+  top: 8px;
   font-size: 145%;
-
+  z-index: 9990;
 }
 
 .grid .tick {
@@ -177,4 +194,13 @@ circle.dot {
   stroke:none;
   fill: #aaa;
   text-anchor: middle;
+}
+
+.layericon {
+  float: right;
+  cursor: pointer;
+}
+
+#layerlist {
+  margin-top: 22px;
 }

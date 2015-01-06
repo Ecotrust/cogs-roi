@@ -4,14 +4,12 @@
 <head>
   <title> COGS ROI </title>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"></link>
+  <link rel="stylesheet" href="css/vendor/ol3-layerswitcher.css"></link>
   <link rel="stylesheet" href="css/main.css"></link>
 </head>
 <body>
 
 <div class="container-fluid">
-
-
-
 
   <nav class="navbar navbar-fixed-top" role="navigation">
     <div class="navbar-inner">
@@ -27,10 +25,6 @@
     </div>
     </div>
   </nav>
-
-
-
-
 
   <div class="row">
     <div class="col-md-6">
@@ -71,10 +65,11 @@
             <div class="threats chart">
               <h3> Limiting Factors </h3>
               <svg class="threats-scatter scatter"></svg>
-              <h4> Average Land Cost ($ per acre) </h4>
-              <em class="text-danger small">
-                Temporary dummy data meant solely to illustrate functionality.
-              </em>
+              <h4> Land Cost 
+                (<em class="text-danger small">
+                  Demonstration only
+                </em>)
+              </h4>
               <div id="cost-container">
 
               </div>
@@ -84,25 +79,20 @@
       </div>
     </div>
     <div class="col-md-6">
+
+      <div id="selected-ecoregion">
+         Please wait. Loading map data...
+      </div>
+
       <div id="map"></div>
+
     </div>
   </div>
 </div>
 
-<div class="caveat">
-  <p class="label label-warning">WARNING</p>
-     &nbsp; &nbsp; Data shown on this page is <strong>completely random</strong> <br>
-     and intended <em>only</em> to demonstrate functionality.
-  <!-- eventually a message re: ecoregions can go here -->
-</div>
-
-
-<div id="selected-ecoregion">
-   Please wait. Loading map data...
-</div>
-
 <script src="js/vendor/ol.js"></script>
 <script src="js/vendor/d3.v3.js"></script>
+<script src="js/vendor/ol3-layerswitcher.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="js/main.js"></script>
 
