@@ -1,7 +1,7 @@
 rm -rf output
-mkdir -p output
-cp -r index.html css/ js/ output
-mkdir -poutput/data
+mkdir output
+cp -r docs.html index.html css/ js/ output
+mkdir output/data
 cp -r data/ecoregions.topojson output/data
 MSG="publish gh-pages"
 # requires pip install ghp-import
