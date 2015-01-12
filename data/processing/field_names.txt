@@ -1,0 +1,145 @@
+This field mapping is crucial to the operation of the tool. The field names on the left must be translated to the shortened name on the right in the final topojson output. 
+
+This comes into play when we join the updated ROI tables with the spatial data
+
+*** see join.sh for usage 
+
+Currently used
+======================
+US_L3NAME                AS US_L3NAME
+FIRST_US_L3CODE          AS FIRST_US_L
+LandBirdHabitat_Index    AS LandBirdHa
+LandBirdAbundance_Index  AS LandBirdAb
+ShorebirdHabitat_Index   AS ShorebirdH
+ShoreBirdAbundance_Index AS ShoreBirdA
+WaterbirdHabitat_Index2  AS WaterbirdH
+WaterbirdAbundance_Index AS WaterbirdA
+WaterfowlHabitat_Index   AS WaterfowlH
+WaterfowlAbundance_Index AS WaterfowlA
+TEAmphib_Index           AS TEAmphib_I
+TEBirds_Index            AS TEBirds_In
+TEFishes_Index           AS TEFishes_I
+TEMammals_Index          AS TEMammals_
+TEPlants_Index           AS TEPlants_I
+TEReptiles_Index         AS TEReptiles
+ROI_Index                AS ROI
+CurExpenditure_Index     AS CurExpendi
+ClimateChange_Index      AS ClimateCha
+Development_Index        AS Developmen
+Range_MIN                AS Range_MIN
+Range_MAX                AS Range_MAX
+Range_MEAN               AS Range_MEAN
+Ag_MIN                   AS Ag_MIN
+Ag_MAX                   AS Ag_MAX
+Ag_MEAN                  AS Ag_MEAN
+Pasture_MIN              AS Pasture_MI
+Pasture_MAX              AS Pasture_MA
+Pasture_MEAN             AS Pasture_ME
+Forest_MIN               AS Forest_MIN
+Forest_MAX               AS Forest_MAX
+Forest_MEAN              AS Forest_MEA
+All_MIN                  AS All_MIN
+All_MAX                  AS All_MAX
+All_MEAN                 AS All_MEAN
+
+
+
+Not used
+==================================
+ConsOutcomeIndex         AS ConsOutcom
+Threats_Index            AS Threats_In
+Cost_index               AS Cost_index
+BioIndex2                AS BioIndex2
+TE_EOSpecies             AS TE_EOSpeci
+TE_EOSpecies_Index       AS TE_EOSpeci
+Condition_Index          AS Condition_
+shale_pct                AS shale_pct
+wind_pct456              AS wind_pct45
+Solar_DNI                AS Solar_DNI
+Solar_DNI2               AS Solar_DNI2
+TotalEnergy              AS TotalEnerg
+Proportion_Area_GAP_Status_1 AS Proportion
+Proportion_Area_GAP_Status_2 AS Proportion
+Proportion_Area_GAP_Status_3 AS Proportion
+Proportion_Area_GAP_Status_4 AS Proportion
+LB_index                 AS LB_index
+SB_index                 AS SB_index
+WB_index                 AS WB_index
+WF_index                 AS WF_index
+LB_Allens_Hummingbird_Or AS LB_Allens_
+LB_American_Woodcock_Or AS LB_America
+LB_Bachmans_sparrow_Or AS LB_Bachman
+LB_Bairds_Sparrow_Or AS LB_Bairds_
+LB_Bells_Vireo_Or AS LB_Bells_V
+LB_Bendires_Thrasher_Or AS LB_Bendire
+LB_Bewicks_Wren_Or AS LB_Bewicks
+LB_Bicknells_Thrush_Or AS LB_Bicknel
+LB_Black_Rosy_Finch_Or AS LB_Black_R
+LB_Black_Swift_Or AS LB_Black_S
+LB_Blackbilled_cuckoo_Or AS LB_Blackbi
+LB_Blackchinned_Sparrow_Or AS LB_Blackch
+LB_Bobolink_Or AS LB_Bobolin
+LB_Browncapped_Rosy_Finch_Or AS LB_Brownca
+LB_Buffbreasted_Sandpiper_Or AS LB_Buffbre
+LB_California_Thrasher_Or AS LB_Califor
+LB_Canada_Warbler_Or AS LB_Canada_
+LB_Cassins_Finch_Or AS LB_Cassins
+LB_Cerulean_Warbler_Or AS LB_Cerulea
+LB_Chestnut_collared_Or AS LB_Chestnu
+LB_Connecticut_Warbler_Or AS LB_Connect
+LB_Eastern_Whip_Poor_Will_Or AS LB_Eastern
+LB_Elegant_Trogon_Or AS LB_Elegant
+LB_Flammulated_Owl_Or AS LB_Flammul
+LB_Gilded_Flicker_Or AS LB_Gilded_
+LB_Goldenwinged_Warbler_Or AS LB_Goldenw
+LB_Gray_Vireo_Or AS LB_Gray_Vi
+LB_Greater_Prairie_Chicken_Or AS LB_Greater
+LB_Henslows_Sparrow_Or AS LB_Henslow
+LB_Kentucky_Warbler_Or AS LB_Kentuck
+LB_Lawrences_Goldfinch_Or AS LB_Lawrenc
+LB_LeContes_Thrasher_Or AS LB_LeConte
+LB_Lucifer_Hummingbird_Or AS LB_Lucifer
+LB_Oak_Titmouse_Or AS LB_Oak_Tit
+LB_Olivesided_Flycatcher_Or AS LB_Olivesi
+LB_Pinyon_Jay_Or AS LB_Pinyon_
+LB_Prairie_Warbler_Or AS LB_Prairie
+LB_prothwarb_Or AS LB_prothwa
+LB_Redheaded_Woodpecker_Or AS LB_Redhead
+LB_Rufous_Hummingbird_Or AS LB_Rufous_
+LB_Rufouswinged_Sparrow_Or AS LB_Rufousw
+LB_Saltmarsh_SharptdSparr_Or AS LB_Saltmar
+LB_Sooty_Grouse_Or AS LB_Sooty_G
+LB_Spragues_pipit_Or AS LB_Sprague
+LB_Swallow_tailed_kite_Or AS LB_Swallow
+LB_Tamaulipas_Crow_Or AS LB_Tamauli
+LB_Tricolored_Blackbird_Or AS LB_Tricolo
+LB_Upland_Sandpiper_Or AS LB_Upland_
+LB_Virginias_Warbler_Or AS LB_Virgini
+LB_Wood_thrush_Or AS LB_Wood_th
+LB_Wrentit_Or AS LB_Wrentit
+SB_American_Oyster_catcher_Or AS SB_America
+SB_Lesser_Yellowlegs_Or AS SB_Lesser_
+SB_Long_billed_Curlew_Or AS SB_Long_bi
+SB_Marbled_Godwit_Or AS SB_Marbled
+SB_Mountain_Plover_Or AS SB_Mountai
+SB_Whimbrel_Or AS SB_Whimbre
+SB_Willet_Or AS SB_Willet_
+SB_WilsonsPlover_Or AS SB_Wilsons
+WB_Black_Rail_Or AS WB_Black_R
+WB_Black_Skimmer_Or AS WB_Black_S
+WB_Gullbilled_Tern_Or AS WB_Gullbil
+WB_King_Rail_Or AS WB_King_Ra
+WB_Least_Tern_Or AS WB_Least_T
+WB_Limpkin_Or AS WB_Limpkin
+WB_Reddish_Egret_Or AS WB_Reddish
+WB_Yellow_Rail_Or AS WB_Yellow_
+WF_American_black_duck_Or AS WF_America
+WF_American_wigeon_Or AS WF_America
+WF_canvasback_Or AS WF_canvasb
+WF_Common_Eider_Or AS WF_Common_
+WF_Lesser_Scaup_Or AS WF_Lesser_
+WF_mallard_Or AS WF_mallard
+WF_mottled_duck_Or AS WF_mottled
+WF_redhead_Or AS WF_redhead
+WF_ring_necked_duck_Or AS WF_ring_ne
+WF_wood_duck_Or AS WF_wood_du

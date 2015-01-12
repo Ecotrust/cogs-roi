@@ -64,11 +64,11 @@ div.boxplot {
   margin: 0;
   height: 18px;
   margin-bottom: 5px;
-  border: 1px solid gray;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 2px;
   background-color: #fee08b;
+  white-space: nowrap;
 }
 
 .axis path,
@@ -165,10 +165,9 @@ div.boxplot {
 
 #cost-container {
   background-color: white;
-  /*height: 16px;*/
   border: 1px lightgrey solid;
   padding: 4px;
-  width: 300px;
+  width: 250px;
   margin: 12px;
 }
 
