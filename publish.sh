@@ -1,4 +1,4 @@
-cp -r index.html css/ data/ js/ output
+cp -r index.html css/ data/ecoregions.topjson js/ output
 MSG="publish gh-pages"
 # requires pip install ghp-import
 ghp-import output -m "$MSG"
