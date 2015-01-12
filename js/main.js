@@ -47,7 +47,7 @@ $(document).ready(function() {
 
   var vector = new ol.layer.Vector({
     source: new ol.source.TopoJSON({
-      url: 'data/ecoregions.topojson' // in default 3857 projection
+      url: 'data/ecoregions.topojson'
     }),
     style: function(feature, resolution) {
       return styleArray;
@@ -163,7 +163,7 @@ $(document).ready(function() {
 
   var getData = function(feature) {
 
-    var medians = [getFeatureAttr(feature, "AvgCost_In")];
+    // var medians = [getFeatureAttr(feature, "AvgCost_In")];
 
     var d = {
       landbirdabundance:    getFeatureAttr(feature, "LandBirdAb"),
@@ -192,43 +192,27 @@ $(document).ready(function() {
         // Boxplots
         {
           type: 'Forest',
-          min: medians[0] - 0.2,
-          firstQuartile: medians[0]/2,
-          median: medians[0],
-          thirdQuartile: medians[0] * 1.3,
-          max: medians[0] + 0.2
+          min: getFeatureAttr(feature, "Forest_MIN"),
+          mean: getFeatureAttr(feature, "Forest_MEA"),
+          max: getFeatureAttr(feature, "Forest_MAX")
         },
         {
           type: 'Agriculture',
-          min: medians[0] - 0.15,
-          firstQuartile: medians[0]/2,
-          median: medians[0],
-          thirdQuartile: medians[0] * 1.3,
-          max: medians[0] + 0.35
+          min: getFeatureAttr(feature, "Ag_MIN"),
+          mean: getFeatureAttr(feature, "Ag_MEAN"),
+          max: getFeatureAttr(feature, "Ag_MAX")
         },
         {
-          type: 'Wetland',
-          min: medians[0] - 0.25,
-          firstQuartile: medians[0]/2,
-          median: medians[0],
-          thirdQuartile: medians[0] * 1.3,
-          max: medians[0] + 0.35
+          type: 'Rangeland',
+          min: getFeatureAttr(feature, "Range_MIN"),
+          mean: getFeatureAttr(feature, "Range_MEAN"),
+          max: getFeatureAttr(feature, "Range_MAX")
         },
         {
           type: 'Pasture',
-          min: medians[0] - 0.1,
-          firstQuartile: medians[0]/2,
-          median: medians[0],
-          thirdQuartile: medians[0] * 1.3,
-          max: medians[0] + 0.3
-        },
-        {
-          type: 'Overall',
-          min: medians[0] -0.1,
-          firstQuartile: medians[0]/2,
-          median: medians[0],
-          thirdQuartile: medians[0] * 1.3,
-          max: medians[0] + 0.1
+          min: getFeatureAttr(feature, "Pasture_MI"),
+          mean: getFeatureAttr(feature, "Pasture_ME"),
+          max: getFeatureAttr(feature, "Pasture_MA")
         }
       ]
     };
@@ -240,7 +224,7 @@ $(document).ready(function() {
     barwidth: 300,
     margin: {top: 12, right: 12, bottom: 40, left: 58},
     scatter: {width: 200, height: 150},
-    animationDuration: 1000
+    animationDuration: 1000,
   };
 
   var ramp = d3.scale.threshold()
@@ -374,16 +358,30 @@ $(document).ready(function() {
     return y(scaled);
   }
 
+  function scaleRawCost(cost) {
+    // TODO this should be done in the GIS Analysis step
+    var absmin = 18.0;
+    var absmax = 12438.0;
+
+    var scaled = (cost - absmin) / (absmax - absmin);
+    return scaled;
+  }
+
   function costWidth(d){
-    return Math.round((d.max-d.min) * 100) + 20 + 'px';
+    var scaledMin = scaleRawCost(d.min);
+    var scaledMax = scaleRawCost(d.max);
+    var rawWidth = scaledMax - scaledMin;
+
+    return Math.round(rawWidth * 250) + 'px';
   }
 
   function costOffset(d) {
-    return (60 + (d.min * 240)) + 'px';
+    var scaledMin = scaleRawCost(d.min);
+    return Math.round(scaledMin * 250) + 'px';
   }
 
   function costText(d) {
-    return d.type;
+    return d.type + " ($" + Math.round(d.mean) + ")";
   }
 
   function redraw(data) {
