@@ -254,27 +254,30 @@ $(document).ready(function() {
       .attr('width', config.scatter.width)
       .attr('height', config.scatter.height);
 
+  // Axis labels
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + config.scatter.height + ")")
-      .call(xAxis)
+      // .call(xAxis)
     .append("text")
       .attr("class", "label")
       .attr("x", config.scatter.width/2)
-      .attr("y", 36)
+      .attr("y", 26)
       .style("text-anchor", "middle");
 
   svg.append("g")
       .attr("class", "y axis")
-      .call(yAxis)
+      // .call(yAxis)
     .append("text")
       .attr("class", "label")
       .attr("transform", "rotate(-90)")
       .attr("x", -1 * config.scatter.height/2)
-      .attr("y", -46)
+      .attr("y", -26)
       .attr("dy", ".71em")
       .style("text-anchor", "middle");
 
+
+  // Grids
   svg.append("g")
     .attr("class", "grid")
     .attr("transform", "translate(0," + config.scatter.height + ")")
@@ -290,7 +293,7 @@ $(document).ready(function() {
         .tickFormat("")
   );
 
-  svg.append("circle").attr("class", "dot");
+  // svg.append("circle").attr("class", "dot");
 
   var svgRoi = d3.select("svg.roi-scatter");
   var svgThreats = d3.select("svg.threats-scatter");
@@ -300,32 +303,88 @@ $(document).ready(function() {
 
   quads = svgRoi.append("g");
 
-  quads.append("text")
-    .attr("class", "quadrant")
-    .text("Under-valued") // upper left
-    .attr("transform", "translate(110,40)")
-    .call(yAxis);
+  svgRoi.append("circle")
+    .attr("class", "dot")
+    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
 
-  quads.append("text")
-    .attr("class", "quadrant")
-    .text("Not a Priority") // lower left
-    .attr("transform", "translate(110,120)")
-    .call(yAxis);
+  function labelQuadrants(elem, labels) {
+    var x, y;
+    var lineHeight = 20;
 
-  quads.append("text")
-    .attr("class", "quadrant")
-    .text("Solid Investments") // upper right
-    .attr("transform", "translate(208,40)")
-    .call(yAxis);
+    for (var quadrant in labels) {
+      switch(quadrant) {
+        case "UL":
+            x = 110; y = 40; break;
+        case "UR":
+            x = 205; y = 40; break;
+        case "LL":
+            x = 110; y = 120; break;
+        case "LR":
+            x = 205; y = 120; break;
+      }
+      var words = labels[quadrant].split(" ");
+      for (var i=0; i < words.length; i++) {
+        elem.append("text")
+          .attr("class", "quadrant")
+          .text(words[i])
+          .attr("transform", "translate(" + x + "," + y + ")");
+        y += lineHeight;
+      }
+    }
+  }
 
-  quads.append("text")
-    .attr("class", "quadrant")
-    .text("Over-valued") // lower right
-    .attr("transform", "translate(205,120)")
-    .call(yAxis);
+  function colorQuadrants(elem, colors) {
+    console.log(elem);
+
+    var x = config.margin.left;
+    var y = config.margin.top;
+    var width = config.scatter.width / 2.0;
+    var height = config.scatter.height / 2.0;
+
+    var xOffset = 0;
+    var yOffset = 0;
+
+    for (var quadrant in colors) {
+      switch(quadrant) {
+        case "UL":
+            xOffset = 0; yOffset = 0; break;
+        case "UR":
+            xOffset = 1; yOffset = 0; break;
+        case "LL":
+            xOffset = 0; yOffset = 1; break;
+        case "LR":
+            xOffset = 1; yOffset = 1; break;
+      }
+      elem.append("rect")
+        .attr("fill", colors[quadrant])
+        .attr("x", x + (xOffset * width))
+        .attr("y", y + (yOffset * height))
+        .attr("width", width)
+        .attr("height", height);
+    };
+  }
+
+
+  colorQuadrants(quads,
+    {'UL': '#4f6228',
+     'UR': '#c3d69b',
+     'LL': '#d99694',
+     'LR': '#ffff99'}
+  );
+
+  labelQuadrants(quads,
+    {'UL': "Increase Investment",
+     'UR': "Continue Investing",
+     'LL': "Low Priority",
+     'LR': "Evaluate Further"}
+  );
 
   svgThreats.select("g.x text.label").text("Climate Change");
-  svgThreats.select("g.y text.label").text("Development");
+  svgThreats.select("g.y text.label").text("Habitat Loss");
+
+  svgThreats.append("circle")
+    .attr("class", "dot")
+    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
 
   d3.select("#cost-container")
     .selectAll(".boxplot")
@@ -352,10 +411,7 @@ $(document).ready(function() {
   }
 
   function roiY(d) {
-    var raw = d.roi;
-    // TODO scale in GIS analysis step 
-    var scaled = ((raw + 7) / 41.7);
-    return y(scaled);
+    return y(d.roi);
   }
 
   function scaleRawCost(cost) {
