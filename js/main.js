@@ -161,9 +161,7 @@ $(document).ready(function() {
     }
   }
 
-  var getData = function(feature) {
-
-    // var medians = [getFeatureAttr(feature, "AvgCost_In")];
+  function getData(feature) {
 
     var d = {
       landbirdabundance:    getFeatureAttr(feature, "LandBirdAb"),
@@ -218,94 +216,7 @@ $(document).ready(function() {
     };
 
     return d;
-  };
-    
-  var config = {
-    barwidth: 300,
-    margin: {top: 12, right: 12, bottom: 40, left: 58},
-    scatter: {width: 200, height: 150},
-    animationDuration: 1000,
-  };
-
-  var ramp = d3.scale.threshold()
-      .domain([0.2, 0.4, 0.6, 0.8])
-      .range(["#cccccc", "#B6B9EF", "#9799C3", "#666893", "#2c3e50"]);
-
-  var textramp = d3.scale.threshold()
-      .domain([0.6])
-      .range(["black", "white"]);
-
-  var x = d3.scale.linear().range([0, config.scatter.width]);
-  var y = d3.scale.linear().range([config.scatter.height, 0]);
-
-  var xAxis = d3.svg.axis().ticks(3).scale(x).orient("bottom");
-  var yAxis = d3.svg.axis().ticks(3).scale(y).orient("left");
-
-  var svg = d3.selectAll("svg.scatter")
-      .attr("width", config.scatter.width + config.margin.left + config.margin.right)
-      .attr("height", config.scatter.height + config.margin.top + config.margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
-
-  svg.append("rect")
-      .attr('x', 0)
-      .attr('y', 0)
-      .style("fill", '#f9f9f9')
-      .attr('width', config.scatter.width)
-      .attr('height', config.scatter.height);
-
-  // Axis labels
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + config.scatter.height + ")")
-      // .call(xAxis)
-    .append("text")
-      .attr("class", "label")
-      .attr("x", config.scatter.width/2)
-      .attr("y", 26)
-      .style("text-anchor", "middle");
-
-  svg.append("g")
-      .attr("class", "y axis")
-      // .call(yAxis)
-    .append("text")
-      .attr("class", "label")
-      .attr("transform", "rotate(-90)")
-      .attr("x", -1 * config.scatter.height/2)
-      .attr("y", -26)
-      .attr("dy", ".71em")
-      .style("text-anchor", "middle");
-
-
-  // Grids
-  svg.append("g")
-    .attr("class", "grid")
-    .attr("transform", "translate(0," + config.scatter.height + ")")
-    .call(xAxis
-        .tickSize(-1 * config.scatter.height, 0, 0)
-        .tickFormat("")
-  );
-
-  svg.append("g")
-    .attr("class", "grid")
-    .call(yAxis
-        .tickSize(-1 * config.scatter.width, 0, 0)
-        .tickFormat("")
-  );
-
-  // svg.append("circle").attr("class", "dot");
-
-  var svgRoi = d3.select("svg.roi-scatter");
-  var svgThreats = d3.select("svg.threats-scatter");
-
-  svgRoi.select("g.x text.label").text("Current Investment");
-  svgRoi.select("g.y text.label").text("Return on Investment");
-
-  quads = svgRoi.append("g");
-
-  svgRoi.append("circle")
-    .attr("class", "dot")
-    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+  }
 
   function labelQuadrants(elem, labels) {
     var x, y;
@@ -363,22 +274,113 @@ $(document).ready(function() {
         .attr("height", height);
     };
   }
+   
+  var config = {
+    barwidth: 300,
+    margin: {top: 12, right: 12, bottom: 40, left: 58},
+    scatter: {width: 200, height: 150},
+    animationDuration: 1000,
+  };
+
+  var ramp = d3.scale.threshold()
+      .domain([0.2, 0.4, 0.6, 0.8])
+      .range(["#cccccc", "#B6B9EF", "#9799C3", "#666893", "#2c3e50"]);
+
+  var textramp = d3.scale.threshold()
+      .domain([0.6])
+      .range(["black", "white"]);
+
+  var x = d3.scale.linear().range([0, config.scatter.width]);
+  var y = d3.scale.linear().range([config.scatter.height, 0]);
+
+  var xAxis = d3.svg.axis().ticks(3).scale(x).orient("bottom");
+  var yAxis = d3.svg.axis().ticks(3).scale(y).orient("left");
+
+  var svg = d3.selectAll("svg.scatter")
+      .attr("width", config.scatter.width + config.margin.left + config.margin.right)
+      .attr("height", config.scatter.height + config.margin.top + config.margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+
+  svg.append("rect")
+      .attr('x', 0)
+      .attr('y', 0)
+      .style("fill", '#f9f9f9')
+      .attr('width', config.scatter.width)
+      .attr('height', config.scatter.height);
+
+  /*
+   * Axis labels
+   */
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + config.scatter.height + ")")
+    .append("text")
+      .attr("class", "label")
+      .attr("x", config.scatter.width/2)
+      .attr("y", 26)
+      .style("text-anchor", "middle");
+
+  svg.append("g")
+      .attr("class", "y axis")
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -1 * config.scatter.height/2)
+      .attr("y", -26)
+      .attr("dy", ".71em")
+      .style("text-anchor", "middle");
 
 
-  colorQuadrants(quads,
+  /*
+   * Grids
+   */
+  svg.append("g")
+    .attr("class", "grid")
+    .attr("transform", "translate(0," + config.scatter.height + ")")
+    .call(xAxis
+        .tickSize(-1 * config.scatter.height, 0, 0)
+        .tickFormat("")
+  );
+
+  svg.append("g")
+    .attr("class", "grid")
+    .call(yAxis
+        .tickSize(-1 * config.scatter.width, 0, 0)
+        .tickFormat("")
+  );
+
+
+  /*
+   * ROI Graph
+   */
+  var svgRoi = d3.select("svg.roi-scatter");
+  svgRoi.select("g.x text.label").text("Current Investment");
+  svgRoi.select("g.y text.label").text("Return on Investment");
+  
+  colorQuadrants(svgRoi,
     {'UL': '#4f6228',
      'UR': '#c3d69b',
      'LL': '#d99694',
      'LR': '#ffff99'}
   );
 
-  labelQuadrants(quads,
+  labelQuadrants(svgRoi,
     {'UL': "Increase Investment",
      'UR': "Continue Investing",
      'LL': "Low Priority",
      'LR': "Evaluate Further"}
   );
 
+  svgRoi.append("circle")
+    .attr("class", "dot")
+    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+
+
+  /*
+   * Limiting Factor Graph
+   */
+  var svgThreats = d3.select("svg.threats-scatter");
   svgThreats.select("g.x text.label").text("Climate Change");
   svgThreats.select("g.y text.label").text("Habitat Loss");
 
@@ -386,6 +388,9 @@ $(document).ready(function() {
     .attr("class", "dot")
     .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
 
+  /*
+   * Land Costs
+   */
   d3.select("#cost-container")
     .selectAll(".boxplot")
     .data(getData()['costs'])
