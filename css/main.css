@@ -191,7 +191,7 @@ circle.dot {
 .quadrant {
   font-size:9pt;
   stroke:none;
-  fill: #aaa;
+  fill: #333;
   text-anchor: middle;
 }
 
