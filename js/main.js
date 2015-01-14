@@ -382,6 +382,10 @@ $(document).ready(function() {
   svgThreats.select("g.x text.label").text("Climate Change");
   svgThreats.select("g.y text.label").text("Habitat Loss");
 
+  svgThreats.append("circle")
+    .attr("class", "dot")
+    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+
   d3.select("#cost-container")
     .selectAll(".boxplot")
     .data(getData()['costs'])
