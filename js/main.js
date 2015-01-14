@@ -293,7 +293,7 @@ $(document).ready(function() {
         .tickFormat("")
   );
 
-  svg.append("circle").attr("class", "dot");
+  // svg.append("circle").attr("class", "dot");
 
   var svgRoi = d3.select("svg.roi-scatter");
   var svgThreats = d3.select("svg.threats-scatter");
@@ -302,6 +302,10 @@ $(document).ready(function() {
   svgRoi.select("g.y text.label").text("Return on Investment");
 
   quads = svgRoi.append("g");
+
+  svgRoi.append("circle")
+    .attr("class", "dot")
+    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
 
   function labelQuadrants(elem, labels) {
     var x, y;
@@ -375,10 +379,8 @@ $(document).ready(function() {
      'LR': "Evaluate Further"}
   );
 
-  // svgRoi.append("circle").attr("class", "dot");
-
   svgThreats.select("g.x text.label").text("Climate Change");
-  svgThreats.select("g.y text.label").text("Development");
+  svgThreats.select("g.y text.label").text("Habitat Loss");
 
   d3.select("#cost-container")
     .selectAll(".boxplot")
@@ -405,10 +407,7 @@ $(document).ready(function() {
   }
 
   function roiY(d) {
-    var raw = d.roi;
-    // TODO scale in GIS analysis step 
-    var scaled = ((raw + 7) / 41.7);
-    return y(scaled);
+    return y(d.roi);
   }
 
   function scaleRawCost(cost) {
