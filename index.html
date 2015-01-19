@@ -1,100 +1,101 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <html>
+
 <head>
   <title> COGS ROI </title>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"></link>
   <link rel="stylesheet" href="css/vendor/ol3-layerswitcher.css"></link>
   <link rel="stylesheet" href="css/main.css"></link>
 </head>
+
 <body>
 
-<div class="container-fluid">
+  <div class="container-fluid">
 
-  <nav class="navbar navbar-fixed-top" role="navigation">
-    <div class="navbar-inner">
-    <div class="container-fluid">
-      <a class="brand" href = "./">
-        National Wildlife Refuge System Return on Investment for Strategic Growth
-      </a>
-      <div class="navlinks pull-right">
-        <a href="./docs.html">Learn More</a>
-        <span class="sep"></span>
-        <a href="http://cogs-dev.priorities.ecotrust.org/">COGS Priorities Tool</a>
+    <nav class="navbar navbar-fixed-top" role="navigation">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href=".">
+            National Wildlife Refuge System Return on Investment for Strategic Growth
+          </a>
+          <div class="navlinks pull-right">
+            <a href="./docs.html">Learn More</a>
+            <span class="sep"></span>
+            <a href="http://cogs-dev.priorities.ecotrust.org/">COGS Priorities Tool</a>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div id="results-container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="">
-              <div class="landbird chart">
-                <h3> Population Objectives </h3>
-                <h4> Landbird </h4>
-                <div class="landbirdabundance bar" style="width:0;">Abundance</div>
-                <div class="landbirdhabitat bar" style="width:0;">Habitat</div>
-                <h4> Waterbird </h4>
-                <div class="waterbirdabundance bar" style="width:0;">Abundance</div>
-                <div class="waterbirdhabitat bar" style="width:0;">Habitat</div>
-                <h4> Waterfowl </h4>
-                <div class="waterfowlabundance bar" style="width:0;">Abundance</div>
-                <div class="waterfowlhabitat bar" style="width:0;">Habitat</div>
-                <h4> Shorebird </h4>
-                <div class="shorebirdabundance bar" style="width:0;">Abundance</div>
-                <div class="shorebirdhabitat bar" style="width:0;">Habitat</div>
-                <h4> Threatened and Endangered </h4>
-                <div class="threatenedfish bar" style="width:0;">Fish</div>
-                <div class="threatenedmammals bar" style="width:0;">Mammals</div>
-                <div class="threatenedreptiles bar" style="width:0;">Reptiles</div>
-                <div class="threatenedplants bar" style="width:0;">Plants</div>
-                <div class="threatenedamphibians bar" style="width:0;">Amphibians</div>
-                <div class="threatenedbirds bar" style="width:0;">Birds</div>
+    <div class="row">
+      <div class="col-md-6">
+        <div id="results-container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="">
+                <div class="landbird chart">
+                  <h3> Population Objectives </h3>
+                  <h4> Landbird </h4>
+                  <div class="landbirdabundance bar" style="width:0;">Abundance</div>
+                  <div class="landbirdhabitat bar" style="width:0;">Habitat</div>
+                  <h4> Waterbird </h4>
+                  <div class="waterbirdabundance bar" style="width:0;">Abundance</div>
+                  <div class="waterbirdhabitat bar" style="width:0;">Habitat</div>
+                  <h4> Waterfowl </h4>
+                  <div class="waterfowlabundance bar" style="width:0;">Abundance</div>
+                  <div class="waterfowlhabitat bar" style="width:0;">Habitat</div>
+                  <h4> Shorebird </h4>
+                  <div class="shorebirdabundance bar" style="width:0;">Abundance</div>
+                  <div class="shorebirdhabitat bar" style="width:0;">Habitat</div>
+                  <h4> Threatened and Endangered </h4>
+                  <div class="threatenedfish bar" style="width:0;">Fish</div>
+                  <div class="threatenedmammals bar" style="width:0;">Mammals</div>
+                  <div class="threatenedreptiles bar" style="width:0;">Reptiles</div>
+                  <div class="threatenedplants bar" style="width:0;">Plants</div>
+                  <div class="threatenedamphibians bar" style="width:0;">Amphibians</div>
+                  <div class="threatenedbirds bar" style="width:0;">Birds</div>
+                </div>
               </div>
             </div>
 
-          </div>
-          <div class="col-md-6">
-            <div class="threats chart">
-              <h3> Return on Investment </h3>
-               <svg class="roi-scatter scatter"></svg>
-            </div>
-            <div class="threats chart">
-              <h3> Limiting Factors </h3>
-              <svg class="threats-scatter scatter"></svg>
-              <h4> Land Cost 
-                <span class="small">
-                Land Type (Avg Cost, $/acre)
-                </span>
-              </h4>
-              <div id="cost-container">
-
+            <div class="col-md-6">
+              <div class="threats chart">
+                <h3> Return on Investment </h3>
+                <svg class="roi-scatter scatter"></svg>
+              </div>
+              <div class="threats chart">
+                <h3> Limiting Factors </h3>
+                <svg class="threats-scatter scatter"></svg>
+                <h4> Land Cost
+                  <span class="small">
+                    Land Type (Avg Cost, $/acre)
+                  </span>
+                </h4>
+                <div id="cost-container"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
+      <div class="col-md-6">
 
-      <div id="selected-ecoregion">
-         Please wait. Loading map data...
+        <div id="selected-ecoregion">
+          Please wait. Loading map data...
+        </div>
+
+        <div id="map"></div>
+
       </div>
-
-      <div id="map"></div>
-
     </div>
   </div>
-</div>
 
-<script src="js/vendor/ol.js"></script>
-<script src="js/vendor/d3.v3.js"></script>
-<script src="js/vendor/ol3-layerswitcher.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="js/main.js"></script>
+  <script src="js/vendor/ol.js"></script>
+  <script src="js/vendor/d3.v3.js"></script>
+  <script src="js/vendor/ol3-layerswitcher.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="js/main.js"></script>
 
 </body>
+
 </html>
