@@ -24,22 +24,22 @@ $(document).ready(function() {
           color: 'rgba(255, 255, 255, 0.1)'
         }),
         stroke: new ol.style.Stroke({
-          color: 'yellow',
-          width: 2
-        })
-        // Problem: multipart labels with no collision detection
-        // https://groups.google.com/forum/#!searchin/ol3-dev/label/ol3-dev/Yp7EOiwiycE/YdpNU6-eDToJ
-        // text: new ol.style.Text({
-        //   font: '14px Calibri,sans-serif',
-        //   text: text,
-        //   fill: new ol.style.Fill({
-        //     color: '#000'
-        //   }),
-        //   stroke: new ol.style.Stroke({
-        //     color: 'rgba(255, 255, 255, 0.7)',
-        //     width: 3
-        //   })
-        // })
+            color: 'yellow',
+            width: 2
+          })
+          // Problem: multipart labels with no collision detection
+          // https://groups.google.com/forum/#!searchin/ol3-dev/label/ol3-dev/Yp7EOiwiycE/YdpNU6-eDToJ
+          // text: new ol.style.Text({
+          //   font: '14px Calibri,sans-serif',
+          //   text: text,
+          //   fill: new ol.style.Fill({
+          //     color: '#000'
+          //   }),
+          //   stroke: new ol.style.Stroke({
+          //     color: 'rgba(255, 255, 255, 0.7)',
+          //     width: 3
+          //   })
+          // })
       })];
     }
     return styleCache[text];
@@ -52,11 +52,7 @@ $(document).ready(function() {
     style: function(feature, resolution) {
       return styleArray;
     },
-    change: function(state) {
-      console.log(state);
-    },
     title: "US Ecoregions (level 3)"
-
   });
 
   var map = new ol.Map({
@@ -65,12 +61,16 @@ $(document).ready(function() {
         title: "Basemaps",
         layers: [
           new ol.layer.Tile({
-            source: new ol.source.MapQuest({layer: 'sat'}),
+            source: new ol.source.MapQuest({
+              layer: 'sat'
+            }),
             title: "Mapquest Satellite",
             type: "base"
           }),
           new ol.layer.Tile({
-            source: new ol.source.MapQuest({layer: 'osm'}),
+            source: new ol.source.MapQuest({
+              layer: 'osm'
+            }),
             title: "Mapquest",
             visible: false,
             type: "base"
@@ -87,11 +87,13 @@ $(document).ready(function() {
             visible: false,
             source: new ol.source.ImageWMS({
               url: 'http://demo.opengeo.org/geoserver/wms',
-              params: {'LAYERS': 'topp:states'},
+              params: {
+                'LAYERS': 'topp:states'
+              },
               serverType: 'geoserver'
             })
           }),
-          // For tiled, see http://openlayers.org/en/v3.0.0/examples/wms-tiled.js 
+          // For tiled, see http://openlayers.org/en/v3.0.0/examples/wms-tiled.js
 
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
@@ -99,7 +101,9 @@ $(document).ready(function() {
             visible: false,
             source: new ol.source.ImageWMS({
               url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54933e61e4b06a960f00e72e/MapServer/WmsServer',
-              params: {'LAYERS': '0'}
+              params: {
+                'LAYERS': '0'
+              }
             })
           }),
 
@@ -109,7 +113,9 @@ $(document).ready(function() {
             visible: false,
             source: new ol.source.ImageWMS({
               url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54934d9ce4b0bb067209b73a/MapServer/WMSServer',
-              params: {'LAYERS': '0'}
+              params: {
+                'LAYERS': '0'
+              }
             })
           }),
 
@@ -119,7 +125,9 @@ $(document).ready(function() {
             visible: false,
             source: new ol.source.ImageWMS({
               url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54934eebe4b0bb067209b73e/MapServer/WMSServer',
-              params: {'LAYERS': '0'}
+              params: {
+                'LAYERS': '0'
+              }
             })
           }),
 
@@ -157,34 +165,33 @@ $(document).ready(function() {
         val = 0;
       }
       return val;
-      //console.log(attr, val);
     }
   }
 
   function getData(feature) {
 
     var d = {
-      landbirdabundance:    getFeatureAttr(feature, "LandBirdAb"),
-      landbirdhabitat:      getFeatureAttr(feature, "LandBirdHa"),
-      shorebirdabundance:   getFeatureAttr(feature, "ShoreBirdA"),
-      shorebirdhabitat:     getFeatureAttr(feature, "ShorebirdH"),
-      waterbirdabundance:   getFeatureAttr(feature, "WaterbirdA"),
-      waterbirdhabitat:     getFeatureAttr(feature, "WaterbirdH"),
-      waterfowlabundance:   getFeatureAttr(feature, "WaterfowlA"),
-      waterfowlhabitat:     getFeatureAttr(feature, "WaterfowlH"),
-      threatenedfish:       getFeatureAttr(feature, "TEFishes_I"),
-      threatenedmammals:    getFeatureAttr(feature, "TEMammals_"),
-      threatenedreptiles:   getFeatureAttr(feature, "TEReptiles"),
-      threatenedbirds:      getFeatureAttr(feature, "TEBirds_In"),
-      threatenedplants:     getFeatureAttr(feature, "TEPlants_I"),
+      landbirdabundance: getFeatureAttr(feature, "LandBirdAb"),
+      landbirdhabitat: getFeatureAttr(feature, "LandBirdHa"),
+      shorebirdabundance: getFeatureAttr(feature, "ShoreBirdA"),
+      shorebirdhabitat: getFeatureAttr(feature, "ShorebirdH"),
+      waterbirdabundance: getFeatureAttr(feature, "WaterbirdA"),
+      waterbirdhabitat: getFeatureAttr(feature, "WaterbirdH"),
+      waterfowlabundance: getFeatureAttr(feature, "WaterfowlA"),
+      waterfowlhabitat: getFeatureAttr(feature, "WaterfowlH"),
+      threatenedfish: getFeatureAttr(feature, "TEFishes_I"),
+      threatenedmammals: getFeatureAttr(feature, "TEMammals_"),
+      threatenedreptiles: getFeatureAttr(feature, "TEReptiles"),
+      threatenedbirds: getFeatureAttr(feature, "TEBirds_In"),
+      threatenedplants: getFeatureAttr(feature, "TEPlants_I"),
       threatenedamphibians: getFeatureAttr(feature, "TEAmphib_I"),
       roi: {
-        roi:                getFeatureAttr(feature, "ROI"),
-        currentInvestment:  getFeatureAttr(feature, "CurExpendi"),
+        roi: getFeatureAttr(feature, "ROI"),
+        currentInvestment: getFeatureAttr(feature, "CurExpendi"),
       },
       threats: {
-        climate:            getFeatureAttr(feature, "ClimateCha"),
-        development:        getFeatureAttr(feature, "Developmen"),
+        climate: getFeatureAttr(feature, "ClimateCha"),
+        development: getFeatureAttr(feature, "Developmen"),
       },
       costs: [
         // Boxplots
@@ -193,20 +200,17 @@ $(document).ready(function() {
           min: getFeatureAttr(feature, "Forest_MIN"),
           mean: getFeatureAttr(feature, "Forest_MEA"),
           max: getFeatureAttr(feature, "Forest_MAX")
-        },
-        {
+        }, {
           type: 'Agriculture',
           min: getFeatureAttr(feature, "Ag_MIN"),
           mean: getFeatureAttr(feature, "Ag_MEAN"),
           max: getFeatureAttr(feature, "Ag_MAX")
-        },
-        {
+        }, {
           type: 'Rangeland',
           min: getFeatureAttr(feature, "Range_MIN"),
           mean: getFeatureAttr(feature, "Range_MEAN"),
           max: getFeatureAttr(feature, "Range_MAX")
-        },
-        {
+        }, {
           type: 'Pasture',
           min: getFeatureAttr(feature, "Pasture_MI"),
           mean: getFeatureAttr(feature, "Pasture_ME"),
@@ -223,18 +227,26 @@ $(document).ready(function() {
     var lineHeight = 20;
 
     for (var quadrant in labels) {
-      switch(quadrant) {
+      switch (quadrant) {
         case "UL":
-            x = 110; y = 40; break;
+          x = 110;
+          y = 40;
+          break;
         case "UR":
-            x = 205; y = 40; break;
+          x = 205;
+          y = 40;
+          break;
         case "LL":
-            x = 110; y = 120; break;
+          x = 110;
+          y = 120;
+          break;
         case "LR":
-            x = 205; y = 120; break;
+          x = 205;
+          y = 120;
+          break;
       }
       var words = labels[quadrant].split(" ");
-      for (var i=0; i < words.length; i++) {
+      for (var i = 0; i < words.length; i++) {
         elem.append("text")
           .attr("class", "quadrant")
           .text(words[i])
@@ -245,8 +257,6 @@ $(document).ready(function() {
   }
 
   function colorQuadrants(elem, colors) {
-    console.log(elem);
-
     var x = config.margin.left;
     var y = config.margin.top;
     var width = config.scatter.width / 2.0;
@@ -256,15 +266,23 @@ $(document).ready(function() {
     var yOffset = 0;
 
     for (var quadrant in colors) {
-      switch(quadrant) {
+      switch (quadrant) {
         case "UL":
-            xOffset = 0; yOffset = 0; break;
+          xOffset = 0;
+          yOffset = 0;
+          break;
         case "UR":
-            xOffset = 1; yOffset = 0; break;
+          xOffset = 1;
+          yOffset = 0;
+          break;
         case "LL":
-            xOffset = 0; yOffset = 1; break;
+          xOffset = 0;
+          yOffset = 1;
+          break;
         case "LR":
-            xOffset = 1; yOffset = 1; break;
+          xOffset = 1;
+          yOffset = 1;
+          break;
       }
       elem.append("rect")
         .attr("fill", colors[quadrant])
@@ -272,23 +290,31 @@ $(document).ready(function() {
         .attr("y", y + (yOffset * height))
         .attr("width", width)
         .attr("height", height);
-    };
+    }
   }
-   
+
   var config = {
     barwidth: 300,
-    margin: {top: 12, right: 12, bottom: 40, left: 58},
-    scatter: {width: 200, height: 150},
+    margin: {
+      top: 12,
+      right: 12,
+      bottom: 40,
+      left: 58
+    },
+    scatter: {
+      width: 200,
+      height: 150
+    },
     animationDuration: 1000,
   };
 
   var ramp = d3.scale.threshold()
-      .domain([0.2, 0.4, 0.6, 0.8])
-      .range(["#cccccc", "#B6B9EF", "#9799C3", "#666893", "#2c3e50"]);
+    .domain([0.2, 0.4, 0.6, 0.8])
+    .range(["#cccccc", "#B6B9EF", "#9799C3", "#666893", "#2c3e50"]);
 
   var textramp = d3.scale.threshold()
-      .domain([0.6])
-      .range(["black", "white"]);
+    .domain([0.6])
+    .range(["black", "white"]);
 
   var x = d3.scale.linear().range([0, config.scatter.width]);
   var y = d3.scale.linear().range([config.scatter.height, 0]);
@@ -297,39 +323,39 @@ $(document).ready(function() {
   var yAxis = d3.svg.axis().ticks(3).scale(y).orient("left");
 
   var svg = d3.selectAll("svg.scatter")
-      .attr("width", config.scatter.width + config.margin.left + config.margin.right)
-      .attr("height", config.scatter.height + config.margin.top + config.margin.bottom)
+    .attr("width", config.scatter.width + config.margin.left + config.margin.right)
+    .attr("height", config.scatter.height + config.margin.top + config.margin.bottom)
     .append("g")
-      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
 
   svg.append("rect")
-      .attr('x', 0)
-      .attr('y', 0)
-      .style("fill", '#f9f9f9')
-      .attr('width', config.scatter.width)
-      .attr('height', config.scatter.height);
+    .attr('x', 0)
+    .attr('y', 0)
+    .style("fill", '#f9f9f9')
+    .attr('width', config.scatter.width)
+    .attr('height', config.scatter.height);
 
   /*
    * Axis labels
    */
   svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + config.scatter.height + ")")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + config.scatter.height + ")")
     .append("text")
-      .attr("class", "label")
-      .attr("x", config.scatter.width/2)
-      .attr("y", 26)
-      .style("text-anchor", "middle");
+    .attr("class", "label")
+    .attr("x", config.scatter.width / 2)
+    .attr("y", 26)
+    .style("text-anchor", "middle");
 
   svg.append("g")
-      .attr("class", "y axis")
+    .attr("class", "y axis")
     .append("text")
-      .attr("class", "label")
-      .attr("transform", "rotate(-90)")
-      .attr("x", -1 * config.scatter.height/2)
-      .attr("y", -26)
-      .attr("dy", ".71em")
-      .style("text-anchor", "middle");
+    .attr("class", "label")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -1 * config.scatter.height / 2)
+    .attr("y", -26)
+    .attr("dy", ".71em")
+    .style("text-anchor", "middle");
 
 
   /*
@@ -339,16 +365,16 @@ $(document).ready(function() {
     .attr("class", "grid")
     .attr("transform", "translate(0," + config.scatter.height + ")")
     .call(xAxis
-        .tickSize(-1 * config.scatter.height, 0, 0)
-        .tickFormat("")
-  );
+      .tickSize(-1 * config.scatter.height, 0, 0)
+      .tickFormat("")
+    );
 
   svg.append("g")
     .attr("class", "grid")
     .call(yAxis
-        .tickSize(-1 * config.scatter.width, 0, 0)
-        .tickFormat("")
-  );
+      .tickSize(-1 * config.scatter.width, 0, 0)
+      .tickFormat("")
+    );
 
 
   /*
@@ -357,24 +383,25 @@ $(document).ready(function() {
   var svgRoi = d3.select("svg.roi-scatter");
   svgRoi.select("g.x text.label").text("Current Investment");
   svgRoi.select("g.y text.label").text("Return on Investment");
-  
-  colorQuadrants(svgRoi,
-    {'UL': '#4f6228',
-     'UR': '#c3d69b',
-     'LL': '#d99694',
-     'LR': '#ffff99'}
-  );
 
-  labelQuadrants(svgRoi,
-    {'UL': "Increase Investment",
-     'UR': "Continue Investing",
-     'LL': "Low Priority",
-     'LR': "Evaluate Further"}
-  );
+  colorQuadrants(svgRoi, {
+    'UL': '#4f6228',
+    'UR': '#c3d69b',
+    'LL': '#d99694',
+    'LR': '#ffff99'
+  });
+
+  labelQuadrants(svgRoi, {
+    'UL': "Increase Investment",
+    'UR': "Continue Investing",
+    'LL': "Low Priority",
+    'LR': "Evaluate Further"
+  });
 
   svgRoi.append("circle")
     .attr("class", "dot")
     .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+
 
 
   /*
@@ -394,10 +421,12 @@ $(document).ready(function() {
   d3.select("#cost-container")
     .selectAll(".boxplot")
     .data(getData()['costs'])
-  .enter().append("div")
+    .enter().append("div")
     .attr("class", "boxplot")
     .style("width", 0)
-    .text(function(d) { return d.type; });
+    .text(function(d) {
+      return d.type;
+    });
 
   function barwidth(d) {
     return d * config.barwidth + "px";
@@ -428,7 +457,7 @@ $(document).ready(function() {
     return scaled;
   }
 
-  function costWidth(d){
+  function costWidth(d) {
     var scaledMin = scaleRawCost(d.min);
     var scaledMax = scaleRawCost(d.max);
     var rawWidth = scaledMax - scaledMin;
@@ -449,7 +478,7 @@ $(document).ready(function() {
     for (var variable in data) {
       var d = data[variable];
       if (variable === 'costs') {
-        
+
         d3.select("#cost-container")
           .selectAll(".boxplot")
           .data(d)
@@ -462,34 +491,34 @@ $(document).ready(function() {
       } else if (variable === 'roi') {
 
         svgRoi.selectAll("circle.dot")
-            .data([d])
-            .transition()
-            .duration(config.animationDuration)
-            .attr("class", "dot")
-            .attr("r", 6.5)
-            .attr("cx", roiX)
-            .attr("cy", roiY);
+          .data([d])
+          .transition()
+          .duration(config.animationDuration)
+          .attr("class", "dot")
+          .attr("r", 6.5)
+          .attr("cx", roiX)
+          .attr("cy", roiY);
 
       } else if (variable === 'threats') {
 
         svgThreats.selectAll("circle.dot")
-            .data([d])
-            .transition()
-            .duration(config.animationDuration)
-            .attr("class", "dot")
-            .attr("r", 6.5)
-            .attr("cx", threatsX)
-            .attr("cy", threatsY);
+          .data([d])
+          .transition()
+          .duration(config.animationDuration)
+          .attr("class", "dot")
+          .attr("r", 6.5)
+          .attr("cx", threatsX)
+          .attr("cy", threatsY);
 
       } else {
-        
+
         d3.select("." + variable)
-            .data([d])
-            .transition()
-            .duration(config.animationDuration)
-            .style("background-color", ramp)
-            .style("color", textramp)
-            .style("width", barwidth);
+          .data([d])
+          .transition()
+          .duration(config.animationDuration)
+          .style("background-color", ramp)
+          .style("color", textramp)
+          .style("width", barwidth);
 
       }
     }
@@ -515,17 +544,33 @@ $(document).ready(function() {
     displayFeatureInfo(evt.pixel);
   });
 
-  var resizeMap = function(){
+  var resizeMap = function() {
     $('#map').height($(window).height() - 68);
-    $('#map').width($(window).width()/2 - 24);
+    $('#map').width($(window).width() / 2 - 24);
     map.updateSize();
   };
   window.onload = resizeMap;
   window.onresize = resizeMap;
 
-  vector.on('change', function(a){
+  function plotROI(elem, d) {
+    elem.append("circle")
+      .attr("fill", "gray")
+      .attr("stroke", "white")
+      .attr("opacity", 0.15)
+      .attr("r", 4.5)
+      .attr("cx", x(d.roi)) // extern ref
+      .attr("cy", y(d.currentInvestment)) // extern ref
+      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+  }
+
+  // Fired off when topojson layer is fully loaded
+  vector.on('change', function(evt) {
     var title = document.getElementById('selected-ecoregion');
     title.innerHTML = "Select an Ecoregion to begin";
+
+    evt.target.getSource().forEachFeature(function(f) {
+      plotROI(svgRoi, getData(f).roi);
+    });
   });
 
 }); // end document ready
