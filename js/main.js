@@ -553,22 +553,22 @@ $(document).ready(function() {
 
   function clickRoiCloud(d, i) {
     selectClick.getFeatures().clear();
-    selectClick.getFeatures().push(d.f);
-    displayFeatureInfo(d.f);
+    selectClick.getFeatures().push(d);
+    displayFeatureInfo(d);
   }
 
-  function plotROI(elem, data) {
+  function plotROI(elem, features) {
     elem.selectAll('circle.ghost-point')
-      .data(data)
+      .data(features)
       .enter()
       .append("circle")
         .attr("class", "ghost-point")
         .attr("fill", "white")
-        .attr("stroke", "blue")
-        .attr("opacity", 0.15)
+        .attr("stroke", "darkblue")
+        .attr("opacity", 0.20)
         .attr("r", 3.5)
-        .attr("cx", function(d) { return x(d.x); })
-        .attr("cy", function(d) { return y(d.y); })
+        .attr("cx", function(d) { return x(d.get('CurExpendi')); })
+        .attr("cy", function(d) { return y(d.get('ROI')); })
         .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
         .on("click", clickRoiCloud);
   }
@@ -578,17 +578,8 @@ $(document).ready(function() {
     var title = document.getElementById('selected-ecoregion');
     title.innerHTML = "Select an Ecoregion to begin";
 
-    var plotCoords = [];
-    evt.target.getSource().forEachFeature(function(f) {
-      // var plotCoords = {
-      plotCoords.push({
-        'x': getFeatureAttr(f, "CurExpendi"),
-        'y': getFeatureAttr(f, "ROI"),
-        'f': f
-      });
-    });
-    plotROI(svgRoi, plotCoords);
-
+    var features = evt.target.getSource().getFeatures();
+    plotROI(svgRoi, features);
   });
 
 }); // end document ready
