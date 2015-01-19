@@ -238,7 +238,7 @@ $(document).ready(function() {
           break;
         case "LL":
           x = 110;
-          y = 120;
+          y = 110; // Custom
           break;
         case "LR":
           x = 205;
@@ -394,7 +394,7 @@ $(document).ready(function() {
   labelQuadrants(svgRoi, {
     'UL': "Increase Investment",
     'UR': "Continue Investing",
-    'LL': "Low Priority",
+    'LL': "Lower Investment Priority",
     'LR': "Evaluate Further"
   });
 
