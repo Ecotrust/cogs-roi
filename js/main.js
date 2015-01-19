@@ -553,13 +553,14 @@ $(document).ready(function() {
 
   function plotROI(elem, d) {
     elem.append("circle")
-      .attr("fill", "gray")
-      .attr("stroke", "white")
-      .attr("opacity", 0.15)
-      .attr("r", 4.5)
-      .attr("cx", x(d.roi)) // extern ref
-      .attr("cy", y(d.currentInvestment)) // extern ref
-      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+        .attr("class", "ghost-point")
+        .attr("fill", "white")
+        .attr("stroke", "blue")
+        .attr("opacity", 0.15)
+        .attr("r", 3.5)
+        .attr("cx", x(d.x))
+        .attr("cy", y(d.y))
+        .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
   }
 
   // Fired off when topojson layer is fully loaded
@@ -568,8 +569,13 @@ $(document).ready(function() {
     title.innerHTML = "Select an Ecoregion to begin";
 
     evt.target.getSource().forEachFeature(function(f) {
-      plotROI(svgRoi, getData(f).roi);
+      var plotCoords = {
+        'x': getFeatureAttr(f, "CurExpendi"),
+        'y': getFeatureAttr(f, "ROI")
+      };
+      plotROI(svgRoi, plotCoords);
     });
+
   });
 
 }); // end document ready
