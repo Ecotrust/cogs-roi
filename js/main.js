@@ -523,10 +523,7 @@ $(document).ready(function() {
     }
   }
 
-  var displayFeatureInfo = function(pixel) {
-    var feature = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-      return feature;
-    });
+  var displayFeatureInfo = function(feature) {
     var info = document.getElementById('info');
     var title = document.getElementById('selected-ecoregion');
 
@@ -540,7 +537,10 @@ $(document).ready(function() {
   };
 
   map.on('click', function(evt) {
-    displayFeatureInfo(evt.pixel);
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+      return feature;
+    });
+    displayFeatureInfo(feature);
   });
 
   var resizeMap = function() {
@@ -551,16 +551,26 @@ $(document).ready(function() {
   window.onload = resizeMap;
   window.onresize = resizeMap;
 
-  function plotROI(elem, d) {
-    elem.append("circle")
+  function clickRoiCloud(d, i) {
+    selectClick.getFeatures().clear();
+    selectClick.getFeatures().push(d.f);
+    displayFeatureInfo(d.f);
+  }
+
+  function plotROI(elem, data) {
+    elem.selectAll('circle.ghost-point')
+      .data(data)
+      .enter()
+      .append("circle")
         .attr("class", "ghost-point")
         .attr("fill", "white")
         .attr("stroke", "blue")
         .attr("opacity", 0.15)
         .attr("r", 3.5)
-        .attr("cx", x(d.x))
-        .attr("cy", y(d.y))
-        .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+        .attr("cx", function(d) { return x(d.x); })
+        .attr("cy", function(d) { return y(d.y); })
+        .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
+        .on("click", clickRoiCloud);
   }
 
   // Fired off when topojson layer is fully loaded
@@ -568,13 +578,16 @@ $(document).ready(function() {
     var title = document.getElementById('selected-ecoregion');
     title.innerHTML = "Select an Ecoregion to begin";
 
+    var plotCoords = [];
     evt.target.getSource().forEachFeature(function(f) {
-      var plotCoords = {
+      // var plotCoords = {
+      plotCoords.push({
         'x': getFeatureAttr(f, "CurExpendi"),
-        'y': getFeatureAttr(f, "ROI")
-      };
-      plotROI(svgRoi, plotCoords);
+        'y': getFeatureAttr(f, "ROI"),
+        'f': f
+      });
     });
+    plotROI(svgRoi, plotCoords);
 
   });
 
