@@ -91,7 +91,7 @@ $(document).ready(function() {
               serverType: 'geoserver'
             })
           }),
-          // For tiled, see http://openlayers.org/en/v3.0.0/examples/wms-tiled.js 
+          // For tiled, see http://openlayers.org/en/v3.0.0/examples/wms-tiled.js
 
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
@@ -272,9 +272,9 @@ $(document).ready(function() {
         .attr("y", y + (yOffset * height))
         .attr("width", width)
         .attr("height", height);
-    };
+    }
   }
-   
+
   var config = {
     barwidth: 300,
     margin: {top: 12, right: 12, bottom: 40, left: 58},
@@ -357,7 +357,7 @@ $(document).ready(function() {
   var svgRoi = d3.select("svg.roi-scatter");
   svgRoi.select("g.x text.label").text("Current Investment");
   svgRoi.select("g.y text.label").text("Return on Investment");
-  
+
   colorQuadrants(svgRoi,
     {'UL': '#4f6228',
      'UR': '#c3d69b',
@@ -393,7 +393,7 @@ $(document).ready(function() {
    */
   d3.select("#cost-container")
     .selectAll(".boxplot")
-    .data(getData()['costs'])
+    .data(getData().costs)
   .enter().append("div")
     .attr("class", "boxplot")
     .style("width", 0)
@@ -449,7 +449,7 @@ $(document).ready(function() {
     for (var variable in data) {
       var d = data[variable];
       if (variable === 'costs') {
-        
+
         d3.select("#cost-container")
           .selectAll(".boxplot")
           .data(d)
@@ -482,7 +482,7 @@ $(document).ready(function() {
             .attr("cy", threatsY);
 
       } else {
-        
+
         d3.select("." + variable)
             .data([d])
             .transition()
