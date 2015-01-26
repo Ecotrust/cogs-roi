@@ -130,6 +130,39 @@ $(document).ready(function() {
               }
             })
           }),
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "ROI vs. Expediture",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c2b6fee4b043905e018526/MapServer/WMSServer',
+              params: {
+                'LAYERS': '0'
+              }
+            })
+          }),
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "ROI Index",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c27d14e4b043905e01829d/MapServer/WMSServer',
+              params: {
+                'LAYERS': '0'
+              }
+            })
+          }),
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "Biological Value Index",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c27d3ce4b043905e0182a1/MapServer/WMSServer',
+              params: {
+                'LAYERS': '0'
+              }
+            })
+          }),
 
           vector
         ]
