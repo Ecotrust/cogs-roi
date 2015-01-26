@@ -387,8 +387,8 @@ $(document).ready(function() {
   colorQuadrants(svgRoi, {
     'UL': '#4f6228',
     'UR': '#c3d69b',
-    'LL': '#d99694',
-    'LR': '#ffff99'
+    'LL': '#ffff99',
+    'LR': '#d99694'
   });
 
   labelQuadrants(svgRoi, {
