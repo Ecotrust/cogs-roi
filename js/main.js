@@ -218,6 +218,7 @@ $(document).ready(function() {
       threatenedbirds: getFeatureAttr(feature, "TEBirds_In"),
       threatenedplants: getFeatureAttr(feature, "TEPlants_I"),
       threatenedamphibians: getFeatureAttr(feature, "TEAmphib_I"),
+      threatenedindex: getFeatureAttr(feature, "TE_Index"),
       roi: {
         roi: getFeatureAttr(feature, "ROI"),
         currentInvestment: getFeatureAttr(feature, "CurExpendi"),
@@ -343,6 +344,7 @@ $(document).ready(function() {
       width: 320,
       height: 220
     },
+    boxplotWidth: 350,
     roiPointSize: 4.5,
     animationDuration: 1000,
   };
@@ -487,9 +489,8 @@ $(document).ready(function() {
   }
 
   function scaleRawCost(cost) {
-    // TODO this should be done in the GIS Analysis step
-    var absmin = 18.0;
-    var absmax = 12438.0;
+    var absmin = 10.0;
+    var absmax = 33848.0;
 
     var scaled = (cost - absmin) / (absmax - absmin);
     return scaled;
@@ -500,7 +501,7 @@ $(document).ready(function() {
     var scaledMax = scaleRawCost(d.max);
     var rawWidth = scaledMax - scaledMin;
 
-    return Math.round(rawWidth * 250) + 'px';
+    return Math.round(rawWidth * config.boxplotWidth) + 'px';
   }
 
   function costOffset(d) {

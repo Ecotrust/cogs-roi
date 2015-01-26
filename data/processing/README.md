@@ -35,3 +35,13 @@ Finally, move the final ecoregions.topojson to the data dir
 
 reload the app and proceed.
 
+# Considerations
+
+Most variables are already scaled to 0-1 during the data processing stage. This has the advantage of leaving the client-side agnostic about the raw data values.
+
+However, the cost data are (necessarily)  delivered as raw values so, to the extent that the cost data changes between dataset iterations, we'll need to rescale the data manually.
+
+This is currently accomplished by simply looking at the cost attribute fields
+(all of the `*_MIN`, `*_MAX`, `*_MEAN` fields) in GIS
+and determining the **absolute min and max values**.
+These values get hardcoded into `scaleRawCost` function in `main.js`.

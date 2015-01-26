@@ -55,6 +55,7 @@ div.bar {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  white-space: nowrap;
 }
 
 div.boxplot {
@@ -167,7 +168,7 @@ div.boxplot {
   background-color: white;
   border: 1px lightgrey solid;
   padding: 4px;
-  width: 250px;
+  width: 350px;
   margin: 12px;
 }
 
