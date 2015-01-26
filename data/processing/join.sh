@@ -1,5 +1,5 @@
 ogr2ogr -overwrite -sql \
-  "select 
+  "select
     US_L3NAME                AS US_L3NAME,
     FIRST_US_L3CODE          AS FIRST_US_L,
     LandBirdHabitat_Index    AS LandBirdHa,
@@ -34,8 +34,9 @@ ogr2ogr -overwrite -sql \
     Forest_MEAN              AS Forest_MEA,
     All_MIN                  AS All_MIN,
     All_MAX                  AS All_MAX,
-    All_MEAN                 AS All_MEAN
-   from EcoSums_ForMatt 
-   left join 'original/ROI_Table_Jan6.gdb.zip'.ROITable
+    All_MEAN                 AS All_MEAN,
+    TE_EOSpecies_Index       AS TE_Index
+   from EcoSums_ForMatt
+   left join 'original/ROI_Table_Jan26.gdb.zip'.ROITable
    on EcoSums_ForMatt.FIRST_US_L3CODE = ROITable.FIRST_US_L3CODE" \
    ecoregions_joined_albers.shp original/EcoregionSummaries3.gdb.zip EcoSums_ForMatt

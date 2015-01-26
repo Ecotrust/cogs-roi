@@ -1,8 +1,8 @@
-This field mapping is crucial to the operation of the tool. The field names on the left must be translated to the shortened name on the right in the final topojson output. 
+This field mapping is crucial to the operation of the tool. The field names on the left must be translated to the shortened name on the right in the final topojson output.
 
 This comes into play when we join the updated ROI tables with the spatial data
 
-*** see join.sh for usage 
+*** see join.sh for usage
 
 Currently used
 ======================
@@ -41,7 +41,7 @@ Forest_MEAN              AS Forest_MEA
 All_MIN                  AS All_MIN
 All_MAX                  AS All_MAX
 All_MEAN                 AS All_MEAN
-
+TE_EOSpecies_Index       AS TE_Index
 
 
 Not used
