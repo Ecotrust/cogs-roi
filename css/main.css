@@ -220,7 +220,6 @@ circle.ghost-point {
   fill: white;
   stroke: darkblue;
   opacity: 0.25;
-  r: 3.5;
 }
 
 a.brand:hover {
