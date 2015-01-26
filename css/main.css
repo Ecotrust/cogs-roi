@@ -81,7 +81,7 @@ div.boxplot {
 .axis text {
 /*  font-size: 10pt;
   fill: gray;
-  font-family: sans-serif; 
+  font-family: sans-serif;
 */  font: 11px sans-serif;
 }
 
@@ -103,7 +103,7 @@ div.boxplot {
 }
 
 .panel {
-  background: 0;  
+  background: 0;
 }
 
 .layer-switcher button {
@@ -115,7 +115,7 @@ div.boxplot {
   -moz-border-radius: 6px;
   border-radius: 6px;
   position: absolute;
-  right: 0; 
+  right: 0;
   top: -42px;
   z-index: 9999;
 }
@@ -124,7 +124,7 @@ div.boxplot {
   background-color: rgba(255, 255, 255, 0.85);
   position: absolute;
   top: -42px;
-  right: 0; 
+  right: 0;
   min-width: 280px;
   z-index: 9998;
   font: 12px sans-serif;
@@ -141,14 +141,14 @@ div.boxplot {
 /*
   color: rgb(142, 144, 176);
   background-color: rgba(0, 0, 0, 0.75);
-*/  
+*/
   color: rgb(32, 34, 66);
   background-color: rgba(255, 255, 255, 0.65);
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
   position: absolute;
-  left: 22px; 
+  left: 22px;
   top: 8px;
   font-size: 145%;
   z-index: 9990;
@@ -189,10 +189,17 @@ circle.dot {
 }
 
 .quadrant {
-  font-size:9pt;
+  font-size:11pt;
   stroke:none;
-  fill: #333;
+  fill: #222;
   text-anchor: middle;
+  paint-order: stroke;
+  stroke: white;
+  stroke-width: 2px;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-opacity: 0.55;
+  font-weight: 700;
 }
 
 .layericon {
