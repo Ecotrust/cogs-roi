@@ -221,3 +221,9 @@ circle.ghost-point {
   opacity: 0.25;
   r: 3.5;
 }
+
+a.brand:hover {
+    background-color: #3C4E60;
+    text-decoration: none;
+    color: white;
+}
