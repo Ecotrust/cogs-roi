@@ -189,7 +189,7 @@ circle.dot {
 }
 
 .quadrant {
-  font-size:11pt;
+  font-size:12pt;
   stroke:none;
   fill: #222;
   text-anchor: middle;
@@ -202,6 +202,10 @@ circle.dot {
   font-weight: 700;
 }
 
+text.label {
+  font-size:11pt;
+}
+
 .layericon {
   float: right;
   cursor: pointer;
@@ -209,4 +213,11 @@ circle.dot {
 
 #layerlist {
   margin-top: 22px;
+}
+
+circle.ghost-point {
+  fill: white;
+  stroke: darkblue;
+  opacity: 0.25;
+  r: 3.5;
 }

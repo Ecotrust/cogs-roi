@@ -225,24 +225,29 @@ $(document).ready(function() {
   function labelQuadrants(elem, labels) {
     var x, y;
     var lineHeight = 20;
+    var left = config.margin.left;
+    var top = config.margin.top;
+    var qwidth = config.scatter.width / 2.0;
+    var qheight = config.scatter.height / 2.0;
 
     for (var quadrant in labels) {
+
       switch (quadrant) {
         case "UL":
-          x = 110;
-          y = 40;
+          x = left + (qwidth/2.0);
+          y = top + (qheight/2.0);
           break;
         case "UR":
-          x = 205;
-          y = 40;
+          x = left + (qwidth/2.0) + qwidth;
+          y = top + (qheight/2.0);
           break;
         case "LL":
-          x = 110;
-          y = 110; // Custom
+          x = left + (qwidth/2.0);
+          y = top + (qheight/2.0) + qheight - 10; // custom
           break;
         case "LR":
-          x = 205;
-          y = 120;
+          x = left + (qwidth/2.0) + qwidth;
+          y = top + (qheight/2.0) + qheight;
           break;
       }
       var words = labels[quadrant].split(" ");
@@ -294,17 +299,18 @@ $(document).ready(function() {
   }
 
   var config = {
-    barwidth: 300,
+    barwidth: 240,
     margin: {
-      top: 12,
-      right: 12,
-      bottom: 40,
-      left: 58
+      top: 10,
+      right: 10,
+      bottom: 28,
+      left: 38
     },
     scatter: {
-      width: 200,
-      height: 150
+      width: 320,
+      height: 220
     },
+    roiPointSize: 4.5,
     animationDuration: 1000,
   };
 
@@ -336,7 +342,7 @@ $(document).ready(function() {
     .attr('height', config.scatter.height);
 
   /*
-   * Axis labels
+   * axis labels
    */
   svg.append("g")
     .attr("class", "x axis")
@@ -359,7 +365,7 @@ $(document).ready(function() {
 
 
   /*
-   * Grids
+   * grids
    */
   svg.append("g")
     .attr("class", "grid")
@@ -421,11 +427,11 @@ $(document).ready(function() {
     .selectAll(".boxplot")
     .data(getData().costs)
     .enter().append("div")
-    .attr("class", "boxplot")
-    .style("width", 0)
-    .text(function(d) {
-      return d.type;
-    });
+      .attr("class", "boxplot")
+      .style("width", 0)
+      .text(function(d) {
+        return d.type;
+      });
 
   function barwidth(d) {
     return d * config.barwidth + "px";
@@ -563,10 +569,7 @@ $(document).ready(function() {
       .enter()
       .append("circle")
         .attr("class", "ghost-point")
-        .attr("fill", "white")
-        .attr("stroke", "darkblue")
-        .attr("opacity", 0.20)
-        .attr("r", 3.5)
+        .attr("r", config.roiPointSize)
         .attr("cx", function(d) { return x(d.get('CurExpendi')); })
         .attr("cy", function(d) { return y(d.get('ROI')); })
         .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
