@@ -129,7 +129,6 @@ $(document).ready(function() {
               }
             })
           }),
-
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
             title: "Land Value Scenario",
@@ -141,7 +140,6 @@ $(document).ready(function() {
               }
             })
           }),
-
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
             title: "Climate Change Scenario",
@@ -158,7 +156,7 @@ $(document).ready(function() {
             title: "ROI vs. Expediture",
             visible: false,
             source: new ol.source.ImageWMS({
-              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c2b6fee4b043905e018526/MapServer/WMSServer',
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c6a188e4b043905e019b62/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
@@ -169,7 +167,7 @@ $(document).ready(function() {
             title: "ROI Index",
             visible: false,
             source: new ol.source.ImageWMS({
-              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c27d14e4b043905e01829d/MapServer/WMSServer',
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c6a16ee4b043905e019b5f/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
@@ -197,7 +195,6 @@ $(document).ready(function() {
       zoom: 4
     })
   });
-
 
   // Select interaction handles the highlighting
   var selectClick = new ol.interaction.Select({
@@ -282,6 +279,10 @@ $(document).ready(function() {
   //////////////////////////////////////////////////////////////////////////////
   // D3 Chart setup
   //////////////////////////////////////////////////////////////////////////////
+
+  /*
+   * Scatterplot labeling/coloring functions
+   */
   function labelQuadrants(elem, labels) {
     var x, y;
     var lineHeight = 20;
@@ -358,7 +359,9 @@ $(document).ready(function() {
     }
   }
 
-
+  /*
+   * Color ramps
+   */
   var ramp = d3.scale.threshold()
     .domain([0.2, 0.4, 0.6, 0.8])
     .range(["#cccccc", "#B6B9EF", "#9799C3", "#666893", "#2c3e50"]);
@@ -367,6 +370,10 @@ $(document).ready(function() {
     .domain([0.6])
     .range(["black", "white"]);
 
+
+  /*
+   * scatterplot coordinate reference system
+   */
   var x = d3.scale.linear().range([0, config.scatter.width]);
   var y = d3.scale.linear().range([config.scatter.height, 0]);
 
@@ -374,10 +381,13 @@ $(document).ready(function() {
   var yAxis = d3.svg.axis().ticks(3).scale(y).orient("left");
 
   var svg = d3.selectAll("svg.scatter")
-    .attr("width", config.scatter.width + config.margin.left + config.margin.right)
-    .attr("height", config.scatter.height + config.margin.top + config.margin.bottom)
+    .attr("width",
+      config.scatter.width + config.margin.left + config.margin.right)
+    .attr("height",
+      config.scatter.height + config.margin.top + config.margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+    .attr("transform",
+      "translate(" + config.margin.left + "," + config.margin.top + ")");
 
   svg.append("rect")
     .attr('x', 0)
@@ -385,6 +395,7 @@ $(document).ready(function() {
     .style("fill", '#f9f9f9')
     .attr('width', config.scatter.width)
     .attr('height', config.scatter.height);
+
 
   /*
    * axis labels
@@ -504,7 +515,7 @@ $(document).ready(function() {
 
   function scaleRawCost(cost) {
     var absmin = 10.0;
-    var absmax = 33848.0;
+    var absmax = 33848.0; // Warning; must change this if data changes
 
     var scaled = (cost - absmin) / (absmax - absmin);
     return scaled;
@@ -606,8 +617,10 @@ $(document).ready(function() {
   window.onresize = resizeMap;
 
   function clickRoiCloud(d, i) {
+    // Select ecoregion on map
     selectClick.getFeatures().clear();
     selectClick.getFeatures().push(d);
+    // Activate the charts
     displayFeatureInfo(d);
   }
 
@@ -615,7 +628,7 @@ $(document).ready(function() {
     elem.selectAll('circle.ghost-point')
       .data(features)
       .enter()
-      .append("circle")
+        .append("circle")
         .attr("class", "ghost-point")
         .attr("r", config.roiPointSize)
         .attr("cx", function(d) { return x(d.get('CurExpendi')); })
