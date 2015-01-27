@@ -3,6 +3,29 @@
 
 $(document).ready(function() {
 
+  /*
+   * Main Config object
+   */
+  var config = {
+    barwidth: 240,
+    margin: {
+      top: 10,
+      right: 10,
+      bottom: 28,
+      left: 38
+    },
+    scatter: {
+      width: 320,
+      height: 220
+    },
+    boxplotWidth: 350,
+    roiPointSize: 4.5,
+    animationDuration: 1000,
+  };
+
+  //////////////////////////////////////////////////////////////////////////////
+  // OpenLayers 3 setup
+  //////////////////////////////////////////////////////////////////////////////
   var styleArray = [new ol.style.Style({
     fill: new ol.style.Fill({
       color: 'rgba(255, 255, 255, 0.0)'
@@ -106,7 +129,6 @@ $(document).ready(function() {
               }
             })
           }),
-
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
             title: "Land Value Scenario",
@@ -118,13 +140,45 @@ $(document).ready(function() {
               }
             })
           }),
-
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
             title: "Climate Change Scenario",
             visible: false,
             source: new ol.source.ImageWMS({
               url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54934eebe4b0bb067209b73e/MapServer/WMSServer',
+              params: {
+                'LAYERS': '0'
+              }
+            })
+          }),
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "ROI vs. Expediture",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c6a188e4b043905e019b62/MapServer/WMSServer',
+              params: {
+                'LAYERS': '0'
+              }
+            })
+          }),
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "ROI Index",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c6a16ee4b043905e019b5f/MapServer/WMSServer',
+              params: {
+                'LAYERS': '0'
+              }
+            })
+          }),
+          new ol.layer.Image({
+            extent: [-13884991, 2870341, -7455066, 6338219],
+            title: "Biological Value Index",
+            visible: false,
+            source: new ol.source.ImageWMS({
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c27d3ce4b043905e0182a1/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
@@ -141,7 +195,6 @@ $(document).ready(function() {
       zoom: 4
     })
   });
-
 
   // Select interaction handles the highlighting
   var selectClick = new ol.interaction.Select({
@@ -185,6 +238,7 @@ $(document).ready(function() {
       threatenedbirds: getFeatureAttr(feature, "TEBirds_In"),
       threatenedplants: getFeatureAttr(feature, "TEPlants_I"),
       threatenedamphibians: getFeatureAttr(feature, "TEAmphib_I"),
+      threatenedindex: getFeatureAttr(feature, "TE_Index"),
       roi: {
         roi: getFeatureAttr(feature, "ROI"),
         currentInvestment: getFeatureAttr(feature, "CurExpendi"),
@@ -222,27 +276,39 @@ $(document).ready(function() {
     return d;
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  // D3 Chart setup
+  //////////////////////////////////////////////////////////////////////////////
+
+  /*
+   * Scatterplot labeling/coloring functions
+   */
   function labelQuadrants(elem, labels) {
     var x, y;
     var lineHeight = 20;
+    var left = config.margin.left;
+    var top = config.margin.top;
+    var qwidth = config.scatter.width / 2.0;
+    var qheight = config.scatter.height / 2.0;
 
     for (var quadrant in labels) {
+
       switch (quadrant) {
         case "UL":
-          x = 110;
-          y = 40;
+          x = left + (qwidth/2.0);
+          y = top + (qheight/2.0);
           break;
         case "UR":
-          x = 205;
-          y = 40;
+          x = left + (qwidth/2.0) + qwidth;
+          y = top + (qheight/2.0);
           break;
         case "LL":
-          x = 110;
-          y = 110; // Custom
+          x = left + (qwidth/2.0);
+          y = top + (qheight/2.0) + qheight - 10; // custom
           break;
         case "LR":
-          x = 205;
-          y = 120;
+          x = left + (qwidth/2.0) + qwidth;
+          y = top + (qheight/2.0) + qheight;
           break;
       }
       var words = labels[quadrant].split(" ");
@@ -293,21 +359,9 @@ $(document).ready(function() {
     }
   }
 
-  var config = {
-    barwidth: 300,
-    margin: {
-      top: 12,
-      right: 12,
-      bottom: 40,
-      left: 58
-    },
-    scatter: {
-      width: 200,
-      height: 150
-    },
-    animationDuration: 1000,
-  };
-
+  /*
+   * Color ramps
+   */
   var ramp = d3.scale.threshold()
     .domain([0.2, 0.4, 0.6, 0.8])
     .range(["#cccccc", "#B6B9EF", "#9799C3", "#666893", "#2c3e50"]);
@@ -316,6 +370,10 @@ $(document).ready(function() {
     .domain([0.6])
     .range(["black", "white"]);
 
+
+  /*
+   * scatterplot coordinate reference system
+   */
   var x = d3.scale.linear().range([0, config.scatter.width]);
   var y = d3.scale.linear().range([config.scatter.height, 0]);
 
@@ -323,10 +381,13 @@ $(document).ready(function() {
   var yAxis = d3.svg.axis().ticks(3).scale(y).orient("left");
 
   var svg = d3.selectAll("svg.scatter")
-    .attr("width", config.scatter.width + config.margin.left + config.margin.right)
-    .attr("height", config.scatter.height + config.margin.top + config.margin.bottom)
+    .attr("width",
+      config.scatter.width + config.margin.left + config.margin.right)
+    .attr("height",
+      config.scatter.height + config.margin.top + config.margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
+    .attr("transform",
+      "translate(" + config.margin.left + "," + config.margin.top + ")");
 
   svg.append("rect")
     .attr('x', 0)
@@ -335,8 +396,9 @@ $(document).ready(function() {
     .attr('width', config.scatter.width)
     .attr('height', config.scatter.height);
 
+
   /*
-   * Axis labels
+   * axis labels
    */
   svg.append("g")
     .attr("class", "x axis")
@@ -359,7 +421,7 @@ $(document).ready(function() {
 
 
   /*
-   * Grids
+   * grids
    */
   svg.append("g")
     .attr("class", "grid")
@@ -387,8 +449,8 @@ $(document).ready(function() {
   colorQuadrants(svgRoi, {
     'UL': '#4f6228',
     'UR': '#c3d69b',
-    'LL': '#d99694',
-    'LR': '#ffff99'
+    'LL': '#ffff99',
+    'LR': '#d99694'
   });
 
   labelQuadrants(svgRoi, {
@@ -421,11 +483,15 @@ $(document).ready(function() {
     .selectAll(".boxplot")
     .data(getData().costs)
     .enter().append("div")
-    .attr("class", "boxplot")
-    .style("width", 0)
-    .text(function(d) {
-      return d.type;
-    });
+      .attr("class", "boxplot")
+      .style("width", 0)
+      .text(function(d) {
+        return d.type;
+      });
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Functions below are triggered asyncronously
+  //////////////////////////////////////////////////////////////////////////////
 
   function barwidth(d) {
     return d * config.barwidth + "px";
@@ -448,9 +514,8 @@ $(document).ready(function() {
   }
 
   function scaleRawCost(cost) {
-    // TODO this should be done in the GIS Analysis step
-    var absmin = 18.0;
-    var absmax = 12438.0;
+    var absmin = 10.0;
+    var absmax = 33848.0; // Warning; must change this if data changes
 
     var scaled = (cost - absmin) / (absmax - absmin);
     return scaled;
@@ -461,7 +526,7 @@ $(document).ready(function() {
     var scaledMax = scaleRawCost(d.max);
     var rawWidth = scaledMax - scaledMin;
 
-    return Math.round(rawWidth * 250) + 'px';
+    return Math.round(rawWidth * config.boxplotWidth) + 'px';
   }
 
   function costOffset(d) {
@@ -481,49 +546,49 @@ $(document).ready(function() {
         d3.select("#cost-container")
           .selectAll(".boxplot")
           .data(d)
-          .text(costText)
-          .transition()
-          .duration(config.animationDuration)
-          .style("margin-left", costOffset)
-          .style("width", costWidth);
+            .text(costText)
+            .transition()
+            .duration(config.animationDuration)
+            .style("margin-left", costOffset)
+            .style("width", costWidth);
 
       } else if (variable === 'roi') {
 
         svgRoi.selectAll("circle.dot")
           .data([d])
-          .transition()
-          .duration(config.animationDuration)
-          .attr("class", "dot")
-          .attr("r", 6.5)
-          .attr("cx", roiX)
-          .attr("cy", roiY);
+            .transition()
+            .duration(config.animationDuration)
+            .attr("class", "dot")
+            .attr("r", 6.5)
+            .attr("cx", roiX)
+            .attr("cy", roiY);
 
       } else if (variable === 'threats') {
 
         svgThreats.selectAll("circle.dot")
           .data([d])
-          .transition()
-          .duration(config.animationDuration)
-          .attr("class", "dot")
-          .attr("r", 6.5)
-          .attr("cx", threatsX)
-          .attr("cy", threatsY);
+            .transition()
+            .duration(config.animationDuration)
+            .attr("class", "dot")
+            .attr("r", 6.5)
+            .attr("cx", threatsX)
+            .attr("cy", threatsY);
 
       } else {
 
         d3.select("." + variable)
           .data([d])
-          .transition()
-          .duration(config.animationDuration)
-          .style("background-color", ramp)
-          .style("color", textramp)
-          .style("width", barwidth);
+            .transition()
+            .duration(config.animationDuration)
+            .style("background-color", ramp)
+            .style("color", textramp)
+            .style("width", barwidth);
 
       }
     }
   }
 
-  var displayFeatureInfo = function(feature) {
+  function displayFeatureInfo(feature) {
     var info = document.getElementById('info');
     var title = document.getElementById('selected-ecoregion');
 
@@ -534,7 +599,7 @@ $(document).ready(function() {
     } else {
       title.innerHTML = '&nbsp;';
     }
-  };
+  }
 
   map.on('click', function(evt) {
     var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
@@ -543,17 +608,19 @@ $(document).ready(function() {
     displayFeatureInfo(feature);
   });
 
-  var resizeMap = function() {
+  function resizeMap() {
     $('#map').height($(window).height() - 68);
     $('#map').width($(window).width() / 2 - 24);
     map.updateSize();
-  };
+  }
   window.onload = resizeMap;
   window.onresize = resizeMap;
 
   function clickRoiCloud(d, i) {
+    // Select ecoregion on map
     selectClick.getFeatures().clear();
     selectClick.getFeatures().push(d);
+    // Activate the charts
     displayFeatureInfo(d);
   }
 
@@ -561,12 +628,9 @@ $(document).ready(function() {
     elem.selectAll('circle.ghost-point')
       .data(features)
       .enter()
-      .append("circle")
+        .append("circle")
         .attr("class", "ghost-point")
-        .attr("fill", "white")
-        .attr("stroke", "darkblue")
-        .attr("opacity", 0.20)
-        .attr("r", 3.5)
+        .attr("r", config.roiPointSize)
         .attr("cx", function(d) { return x(d.get('CurExpendi')); })
         .attr("cy", function(d) { return y(d.get('ROI')); })
         .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
