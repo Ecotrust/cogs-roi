@@ -153,10 +153,10 @@ $(document).ready(function() {
           }),
           new ol.layer.Image({
             extent: [-13884991, 2870341, -7455066, 6338219],
-            title: "ROI vs. Expediture",
+            title: "Investment Strategy",
             visible: false,
             source: new ol.source.ImageWMS({
-              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c6a188e4b043905e019b62/MapServer/WMSServer',
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c94c10e4b0bbe8f557ebda/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
@@ -167,7 +167,7 @@ $(document).ready(function() {
             title: "ROI Index",
             visible: false,
             source: new ol.source.ImageWMS({
-              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c6a16ee4b043905e019b5f/MapServer/WMSServer',
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c94c30e4b0bbe8f557ebdd/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
@@ -178,7 +178,7 @@ $(document).ready(function() {
             title: "Biological Value Index",
             visible: false,
             source: new ol.source.ImageWMS({
-              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c27d3ce4b043905e0182a1/MapServer/WMSServer',
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c94bf7e4b0bbe8f557ebd6/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
