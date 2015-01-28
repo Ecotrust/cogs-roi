@@ -472,6 +472,20 @@ $(document).ready(function() {
   svgThreats.select("g.x text.label").text("Climate Change");
   svgThreats.select("g.y text.label").text("Habitat Loss");
 
+  colorQuadrants(svgThreats, {
+    'LL': '#4f6228',
+    'LR': '#ffff99',
+    'UL': '#ffff99',
+    'UR': '#d99694'
+  });
+
+  labelQuadrants(svgThreats, {
+    'UL': "Medium Risk",
+    'UR': "High Risk",
+    'LL': "Low Risk",
+    'LR': "Medium Risk"
+  });
+
   svgThreats.append("circle")
     .attr("class", "dot")
     .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
@@ -637,6 +651,19 @@ $(document).ready(function() {
         .on("click", clickRoiCloud);
   }
 
+  function plotThreats(elem, features) {
+    elem.selectAll('circle.ghost-point')
+      .data(features)
+      .enter()
+        .append("circle")
+        .attr("class", "ghost-point")
+        .attr("r", config.roiPointSize)
+        .attr("cx", function(d) { return x(d.get('ClimateCha')); })
+        .attr("cy", function(d) { return y(d.get('Developmen')); })
+        .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
+        .on("click", clickRoiCloud);
+  }
+
   // Fired off when topojson layer is fully loaded
   vector.on('change', function(evt) {
     var title = document.getElementById('selected-ecoregion');
@@ -644,6 +671,7 @@ $(document).ready(function() {
 
     var features = evt.target.getSource().getFeatures();
     plotROI(svgRoi, features);
+    plotThreats(svgThreats, features);
   });
 
 }); // end document ready
