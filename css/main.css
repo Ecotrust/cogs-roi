@@ -227,3 +227,9 @@ a.brand:hover {
     text-decoration: none;
     color: white;
 }
+
+.doc-content {
+  margin: 25px; 
+  max-width: 960px;
+  font-size: 110%;
+}
