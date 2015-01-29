@@ -461,10 +461,6 @@ $(document).ready(function() {
     'LR': "Evaluate Further"
   });
 
-  svgRoi.append("circle")
-    .attr("class", "dot")
-    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
-
 
   /*
    * Limiting Factor Graph
@@ -486,10 +482,6 @@ $(document).ready(function() {
     'LL': "Low Risk",
     'LR': "Medium Risk"
   });
-
-  svgThreats.append("circle")
-    .attr("class", "dot")
-    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
 
   /*
    * Land Costs
@@ -517,9 +509,7 @@ $(document).ready(function() {
   }
 
   function radiusCost(d) {
-    var size = 5 + 90 * scaleRawCost(d.avgcost);
-    console.log(d, d.avgcost, size);
-    return size;
+    return 5 + 90 * scaleRawCost(d.avgcost);
   }
 
   function threatsY(d) {
@@ -656,6 +646,10 @@ $(document).ready(function() {
         .attr("cy", function(d) { return y(d.get('ROI')); })
         .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
         .on("click", clickRoiCloud);
+
+    svgRoi.append("circle")
+      .attr("class", "dot")
+      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
   }
 
   function plotThreats(elem, features) {
@@ -669,6 +663,10 @@ $(document).ready(function() {
         .attr("cy", function(d) { return y(d.get('HabLoss')); })
         .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
         .on("click", clickRoiCloud);
+
+    svgThreats.append("circle")
+      .attr("class", "dot")
+      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
   }
 
   // Fired off when topojson layer is fully loaded
