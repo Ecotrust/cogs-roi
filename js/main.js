@@ -246,6 +246,7 @@ $(document).ready(function() {
       threats: {
         climate: getFeatureAttr(feature, "ClimateCha"),
         habitatloss: getFeatureAttr(feature, "HabLoss"),
+        avgcost: getFeatureAttr(feature, "All_MEAN"),
       },
       costs: [
         // Boxplots
@@ -515,6 +516,12 @@ $(document).ready(function() {
     return x(d.climate);
   }
 
+  function radiusCost(d) {
+    var size = 5 + 90 * scaleRawCost(d.avgcost);
+    console.log(d, d.avgcost, size);
+    return size;
+  }
+
   function threatsY(d) {
     return y(d.habitatloss);
   }
@@ -584,7 +591,7 @@ $(document).ready(function() {
             .transition()
             .duration(config.animationDuration)
             .attr("class", "dot")
-            .attr("r", 6.5)
+            .attr("r", radiusCost)
             .attr("cx", threatsX)
             .attr("cy", threatsY);
 
