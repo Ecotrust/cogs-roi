@@ -156,7 +156,7 @@ $(document).ready(function() {
             title: "Investment Strategy",
             visible: false,
             source: new ol.source.ImageWMS({
-              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c94c10e4b0bbe8f557ebda/MapServer/WMSServer',
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54ca85e8e4b0ed5de52f169b/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
@@ -167,7 +167,7 @@ $(document).ready(function() {
             title: "ROI Index",
             visible: false,
             source: new ol.source.ImageWMS({
-              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c94c30e4b0bbe8f557ebdd/MapServer/WMSServer',
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54ca8607e4b0ed5de52f169f/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
@@ -178,7 +178,7 @@ $(document).ready(function() {
             title: "Biological Value Index",
             visible: false,
             source: new ol.source.ImageWMS({
-              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54c94bf7e4b0bbe8f557ebd6/MapServer/WMSServer',
+              url: 'https://www.sciencebase.gov/arcgis/services/Catalog/54ca8629e4b0ed5de52f16a2/MapServer/WMSServer',
               params: {
                 'LAYERS': '0'
               }
