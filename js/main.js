@@ -245,7 +245,8 @@ $(document).ready(function() {
       },
       threats: {
         climate: getFeatureAttr(feature, "ClimateCha"),
-        development: getFeatureAttr(feature, "Developmen"),
+        habitatloss: getFeatureAttr(feature, "HabLoss"),
+        avgcost: getFeatureAttr(feature, "All_MEAN"),
       },
       costs: [
         // Boxplots
@@ -460,10 +461,6 @@ $(document).ready(function() {
     'LR': "Evaluate Further"
   });
 
-  svgRoi.append("circle")
-    .attr("class", "dot")
-    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
-
 
   /*
    * Limiting Factor Graph
@@ -485,10 +482,6 @@ $(document).ready(function() {
     'LL': "Low Risk",
     'LR': "Medium Risk"
   });
-
-  svgThreats.append("circle")
-    .attr("class", "dot")
-    .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
 
   /*
    * Land Costs
@@ -515,8 +508,12 @@ $(document).ready(function() {
     return x(d.climate);
   }
 
+  function radiusCost(d) {
+    return 5 + 90 * scaleRawCost(d.avgcost);
+  }
+
   function threatsY(d) {
-    return y(d.development);
+    return y(d.habitatloss);
   }
 
   function roiX(d) {
@@ -584,7 +581,7 @@ $(document).ready(function() {
             .transition()
             .duration(config.animationDuration)
             .attr("class", "dot")
-            .attr("r", 6.5)
+            .attr("r", radiusCost)
             .attr("cx", threatsX)
             .attr("cy", threatsY);
 
@@ -649,6 +646,10 @@ $(document).ready(function() {
         .attr("cy", function(d) { return y(d.get('ROI')); })
         .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
         .on("click", clickRoiCloud);
+
+    svgRoi.append("circle")
+      .attr("class", "dot")
+      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
   }
 
   function plotThreats(elem, features) {
@@ -659,9 +660,13 @@ $(document).ready(function() {
         .attr("class", "ghost-point")
         .attr("r", config.roiPointSize)
         .attr("cx", function(d) { return x(d.get('ClimateCha')); })
-        .attr("cy", function(d) { return y(d.get('Developmen')); })
+        .attr("cy", function(d) { return y(d.get('HabLoss')); })
         .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
         .on("click", clickRoiCloud);
+
+    svgThreats.append("circle")
+      .attr("class", "dot")
+      .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")");
   }
 
   // Fired off when topojson layer is fully loaded
