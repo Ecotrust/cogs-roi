@@ -37,6 +37,6 @@ ogr2ogr -overwrite -sql \
     All_MEAN                 AS All_MEAN,
     TE_EOSpecies_Index_1     AS TE_Index
    from EcoSums_ForMatt
-   left join 'original/ROI_Table_Jan28.gdb.zip'.ROITable
+   left join 'original/ROI_Table_Jan29.gdb.zip'.ROITable
    on EcoSums_ForMatt.FIRST_US_L3CODE = ROITable.FIRST_US_L3CODE" \
    ecoregions_joined_albers.shp original/EcoregionSummaries3.gdb.zip EcoSums_ForMatt
