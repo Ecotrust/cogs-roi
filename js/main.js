@@ -469,12 +469,12 @@ $(document).ready(function() {
   svgThreats.select("g.x text.label").text("Climate Change");
   svgThreats.select("g.y text.label").text("Habitat Loss");
 
-  colorQuadrants(svgThreats, {
-    'LL': '#4f6228',
-    'LR': '#ffff99',
-    'UL': '#ffff99',
-    'UR': '#d99694'
-  });
+  // colorQuadrants(svgThreats, {
+  //   'LL': '#4f6228',
+  //   'LR': '#ffff99',
+  //   'UL': '#ffff99',
+  //   'UR': '#d99694'
+  // });
 
   labelQuadrants(svgThreats, {
     'UL': "Medium Risk",
