@@ -19,7 +19,7 @@ ogr2ogr -overwrite -sql \
     ROI_Index                AS ROI,
     CurExpenditure_Index     AS CurExpendi,
     ClimateChange_Index      AS ClimateCha,
-    Development_Index        AS Developmen,
+    HabLossInd               AS HabLoss,
     Range_MIN                AS Range_MIN,
     Range_MAX                AS Range_MAX,
     Range_MEAN               AS Range_MEAN,
@@ -35,8 +35,8 @@ ogr2ogr -overwrite -sql \
     All_MIN                  AS All_MIN,
     All_MAX                  AS All_MAX,
     All_MEAN                 AS All_MEAN,
-    TE_EOSpecies_Index       AS TE_Index
+    TE_EOSpecies_Index_1     AS TE_Index
    from EcoSums_ForMatt
-   left join 'original/ROI_Table_Jan26.gdb.zip'.ROITable
+   left join 'original/ROI_Table_Jan28.gdb.zip'.ROITable
    on EcoSums_ForMatt.FIRST_US_L3CODE = ROITable.FIRST_US_L3CODE" \
    ecoregions_joined_albers.shp original/EcoregionSummaries3.gdb.zip EcoSums_ForMatt

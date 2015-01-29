@@ -245,7 +245,7 @@ $(document).ready(function() {
       },
       threats: {
         climate: getFeatureAttr(feature, "ClimateCha"),
-        development: getFeatureAttr(feature, "Developmen"),
+        habitatloss: getFeatureAttr(feature, "HabLoss"),
       },
       costs: [
         // Boxplots
@@ -516,7 +516,7 @@ $(document).ready(function() {
   }
 
   function threatsY(d) {
-    return y(d.development);
+    return y(d.habitatloss);
   }
 
   function roiX(d) {
@@ -659,7 +659,7 @@ $(document).ready(function() {
         .attr("class", "ghost-point")
         .attr("r", config.roiPointSize)
         .attr("cx", function(d) { return x(d.get('ClimateCha')); })
-        .attr("cy", function(d) { return y(d.get('Developmen')); })
+        .attr("cy", function(d) { return y(d.get('HabLoss')); })
         .attr("transform", "translate(" + config.margin.left + "," + config.margin.top + ")")
         .on("click", clickRoiCloud);
   }

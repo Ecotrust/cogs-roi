@@ -25,7 +25,7 @@ TEReptiles_Index         AS TEReptiles
 ROI_Index                AS ROI
 CurExpenditure_Index     AS CurExpendi
 ClimateChange_Index      AS ClimateCha
-Development_Index        AS Developmen
+HabLossInd               AS HabLoss
 Range_MIN                AS Range_MIN
 Range_MAX                AS Range_MAX
 Range_MEAN               AS Range_MEAN
@@ -41,11 +41,12 @@ Forest_MEAN              AS Forest_MEA
 All_MIN                  AS All_MIN
 All_MAX                  AS All_MAX
 All_MEAN                 AS All_MEAN
-TE_EOSpecies_Index       AS TE_Index
+TE_EOSpecies_Index_1     AS TE_Index
 
 
 Not used
 ==================================
+Development_Index        AS Developmen
 ConsOutcomeIndex         AS ConsOutcom
 Threats_Index            AS Threats_In
 Cost_index               AS Cost_index
