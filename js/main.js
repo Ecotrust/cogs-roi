@@ -546,7 +546,8 @@ $(document).ready(function() {
   }
 
   function costText(d) {
-    return d.type + " ($" + Math.round(d.mean) + ")";
+    var cost = Math.round(d.mean).toLocaleString();
+    return d.type + " ($" + cost + ")";
   }
 
   function redraw(data) {
