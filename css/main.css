@@ -68,7 +68,7 @@ div.boxplot {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 2px;
-  background-color: #fee08b;
+  background-color: #aaaaaa;
   white-space: nowrap;
 }
 
@@ -229,7 +229,7 @@ a.brand:hover {
 }
 
 .doc-content {
-  margin: 25px; 
+  margin: 25px;
   max-width: 960px;
   font-size: 110%;
 }
