@@ -448,10 +448,10 @@ $(document).ready(function() {
   svgRoi.select("g.y text.label").text("Return on Investment");
 
   colorQuadrants(svgRoi, {
-    'UL': '#4f6228',
-    'UR': '#c3d69b',
-    'LL': '#ffff99',
-    'LR': '#d99694'
+    'UL': '#789220',
+    'UR': '#C3DD64',
+    'LL': '#FDF1B7',
+    'LR': '#E5A948'
   });
 
   labelQuadrants(svgRoi, {
